@@ -1,4 +1,102 @@
-.sidebar-content-example {
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+header {
+  background: linear-gradient(to bottom, white, #9cdfe2, #5aabaf);
+  font-size: x-large;
+  color: white;
+  height: 15%;
   display: flex;
-  justify-content: space-around;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  margin: 0;
+}
+
+.list-wrapper {
+  height: 75%;
+}
+
+.list-wrapper ul li {
+  border-bottom: 1px solid #ccc;
+  padding: 20px;
+  position: relative;
+  font-size: x-large;
+}
+
+.list-wrapper ul li .delete {
+  position: absolute;
+  right: 20px;
+  bottom: 17px;
+  cursor: pointer;
+  color: red;
+}
+
+.buttons-wrapper {
+  height: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttons-wrapper .button-add {
+  background-color: #5aabaf;
+  color: white;
+  height: 20px;
+  width: 20px;
+  border-radius: 50px;
+  text-align: center;
+  padding: 20px 20px;
+  cursor: pointer;
+  position: fixed;
+  bottom: 30px;
+  font-size: large;
+}
+
+.input-wrapper {
+  height: 10%;
+  width: 100%;
+  display: flex;
+  position: fixed;
+  bottom: 30px;
+}
+
+input[type="text"] {
+  font-size: x-large;
+}
+
+.input-wrapper .button-submit {
+  display: inline-block;
+  margin: 0;
+  width: 20%;
+  background-color: #5aabaf;
+  justify-content: center;
+  color: white;
+  align-items: center;
+  display: flex;
+  border-radius: 5px;
+  font-size: large;
+  font-weight: bold;
+}
+
+.input-wrapper input {
+  width: 80%;
+}
+
+.hidden {
+  display: none;
 }
