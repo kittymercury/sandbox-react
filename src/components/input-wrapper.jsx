@@ -5,7 +5,7 @@ export default class InputWrapper extends React.Component {
 
     return (
       <div className="input-wrapper hidden">
-        <input type="text">
+        <input type="text"/>
         <div className="button-submit">OK</div>
       </div>
     )

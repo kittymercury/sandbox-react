@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from './header';
 import ListWrapper from './list-wrapper';
-// import InputWrapper from './input-wrapper';
+import InputWrapper from './input-wrapper';
 import ButtonWrapper from './button-wrapper';
 
 export default class App extends React.Component {
@@ -10,7 +10,7 @@ export default class App extends React.Component {
       <div>
         <Header/>
         <ListWrapper/>
-        {/* <InputWrapper/> */}
+        <InputWrapper/>
         <ButtonWrapper/>
       </div>
     );
