@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class EasyListListItem extends React.Component {
+export default class ListItem extends React.Component {
   render () {
 
     return (

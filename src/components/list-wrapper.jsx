@@ -1,13 +1,13 @@
 import React from 'react';
-import EasyListListItem from './easylist-list-item';
+import ListItem from './list-item';
 
-export default class EasyListListWrapper extends React.Component {
+export default class ListWrapper extends React.Component {
   render () {
 
     return (
       <div className="list-wrapper">
         <ul className="list">
-          <EasyListListItem />
+          <ListItem />
         </ul>
       </div>
     )

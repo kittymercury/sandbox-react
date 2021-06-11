@@ -46,14 +46,14 @@ h1 {
   color: red;
 }
 
-.buttons-wrapper {
+.button-wrapper {
   height: 10%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.buttons-wrapper .button-add {
+.button-wrapper .button-add {
   background-color: #5aabaf;
   color: white;
   height: 20px;
