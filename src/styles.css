@@ -91,6 +91,7 @@ input[type="text"] {
   border-radius: 5px;
   font-size: large;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .input-wrapper input {
