@@ -1,42 +1,43 @@
 import React from 'react';
+import Button from './button';
 
 export default class Keyboard extends React.Component {
   render () {
+    const onClick = this.props.onClick;
 
     return (
       <div className="keyboard">
-
         <div className="keyboard-line">
-          <div className="button clear">C</div>
-          <div className="button backspace">←</div>
+          <Button content="C" type="clear" onClick={onClick} />
+          <Button content="←" type="backspace" onClick={onClick} />
         </div>
 
         <div className="keyboard-line">
-          <div className="button number">1</div>
-          <div className="button number">2</div>
-          <div className="button number">3</div>
-          <div className="button operator">+</div>
+          <Button content="1" type="number" onClick={onClick} />
+          <Button content="2" type="number" onClick={onClick} />
+          <Button content="3" type="number" onClick={onClick} />
+          <Button content="+" type="operator" onClick={onClick} />
         </div>
 
         <div className="keyboard-line">
-          <div className="button number">4</div>
-          <div className="button number">5</div>
-          <div className="button number">6</div>
-          <div className="button operator">-</div>
+          <Button content="4" type="number" onClick={onClick} />
+          <Button content="5" type="number" onClick={onClick} />
+          <Button content="6" type="number" onClick={onClick} />
+          <Button content="-" type="operator" onClick={onClick} />
         </div>
 
         <div className="keyboard-line">
-          <div className="button number">7</div>
-          <div className="button number">8</div>
-          <div className="button number">9</div>
-          <div className="button operator">*</div>
+          <Button content="7" type="number" onClick={onClick} />
+          <Button content="8" type="number" onClick={onClick} />
+          <Button content="9" type="number" onClick={onClick} />
+          <Button content="*" type="operator" onClick={onClick} />
         </div>
 
         <div class="keyboard-line">
-          <div class="button number">.</div>
-          <div class="button number">0</div>
-          <div class="button result">=</div>
-          <div class="button operator">/</div>
+          <Button content="." type="number" onClick={onClick} />
+          <Button content="0" type="number" onClick={onClick} />
+          <Button content="=" type="result" onClick={onClick} />
+          <Button content="/" type="operator" onClick={onClick} />
         </div>
       </div>
     )
