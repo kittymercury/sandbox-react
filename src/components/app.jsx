@@ -22,12 +22,14 @@ export default class App extends React.Component {
         }
       case 'backspace':
         return this.setState({ calculation: calculation.slice(0, -1) });
+
       case 'number':
         if (calculation === '0') {
           return this.setState({ calculation: '0' });
         } else {
           return this.setState({ calculation: calculation + content });
         }
+
       case 'operator':
         if (calculation) {
            if (!calculation.endsWith('*') && !calculation.endsWith('/') && !calculation.endsWith('-') && !calculation.endsWith('+') && !calculation.endsWith('.')) {
@@ -39,10 +41,9 @@ export default class App extends React.Component {
            return this.setState({ calculation: '' });
         };
 
-
-
       case 'clear':
         return this.setState({ calculation: '' });
+
       case 'point':
         if (calculation) {
           if (!calculation.endsWith('*') && !calculation.endsWith('/') && !calculation.endsWith('-') && !calculation.endsWith('+')) {

@@ -51,6 +51,12 @@ body {
   font-size: 35px;
 }
 
+.button:active, .button:focus {
+  background-color: inherit;
+}
+
+
+
 .button.clear {
   width: 210px;
 }
