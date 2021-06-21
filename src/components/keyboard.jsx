@@ -33,8 +33,8 @@ export default class Keyboard extends React.Component {
           <Button content="*" type="operator" onClick={onClick} />
         </div>
 
-        <div class="keyboard-line">
-          <Button content="." type="number" onClick={onClick} />
+        <div className="keyboard-line">
+          <Button content="." type="point" onClick={onClick} />
           <Button content="0" type="number" onClick={onClick} />
           <Button content="=" type="result" onClick={onClick} />
           <Button content="/" type="operator" onClick={onClick} />

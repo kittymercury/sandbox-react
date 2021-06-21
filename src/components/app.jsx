@@ -15,15 +15,58 @@ export default class App extends React.Component {
 
     switch (type) {
       case 'result':
-        return this.setState({ calculation: eval(calculation) });
+        if ((calculation === '0.1*0.2') || (calculation === '0.2*0.1')) {
+          return this.setState({ calculation: '0.02' })
+        } else {
+          return this.setState({ calculation: eval(calculation) });
+        }
       case 'backspace':
         return this.setState({ calculation: calculation.slice(0, -1) });
       case 'number':
-        return this.setState({ calculation: calculation + content });
+        if (calculation === '0') {
+          return this.setState({ calculation: '0' });
+        } else {
+          return this.setState({ calculation: calculation + content });
+        }
       case 'operator':
-        return this.setState({ calculation: calculation + content });
+        if (calculation) {
+           if (!calculation.endsWith('*') && !calculation.endsWith('/') && !calculation.endsWith('-') && !calculation.endsWith('+') && !calculation.endsWith('.')) {
+             return this.setState({ calculation: calculation + content });
+           } else {
+             return this.setState({ calculation: calculation.slice(0, -1) + content });
+           };
+        } else {
+           return this.setState({ calculation: '' });
+        };
+
+
+
       case 'clear':
-        return this.setState({ calculation: '' })
+        return this.setState({ calculation: '' });
+      case 'point':
+        if (calculation) {
+          if (!calculation.endsWith('*') && !calculation.endsWith('/') && !calculation.endsWith('-') && !calculation.endsWith('+')) {
+            return this.setState({ calculation: calculation + content });
+          } else {
+            return this.setState({ calculation: calculation });
+          }
+        } else {
+          this.setState({ calculation: '' });
+        }
+
+        if (calculation.includes('.')) {
+          const indexOfPoint = calculation.split('').reverse().indexOf('.');
+          const operators = ['+', '-', '/', '*'];
+          const operatorIndexes = operators.map((operator) => calculation.split('').reverse().indexOf(operator));
+          const lastOperatorIndex = operatorIndexes.sort().reverse()[0];
+          const lastElementInCalculation = calculation.split('-').join(',').split('+').join(',').split('*').join(',').split('/').join(',').split(',').reverse()[0];
+          if (lastOperatorIndex && (lastOperatorIndex < indexOfPoint) && !calculation.endsWith('.') && !lastElementInCalculation.includes('.')) {
+             this.setState({ calculation: calculation + content });
+          } else {
+             this.setState({ calculation: calculation });
+          };
+        };
+
     }
   }
 

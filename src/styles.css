@@ -3,27 +3,28 @@ html {
 }
 
 body {
-  background: linear-gradient(#e66465, #9198e5);
+  background: radial-gradient(50% 30% ellipse at center top, #201e40 0%, rgba(0,0,0,0) 100%), radial-gradient(60% 50% ellipse at center bottom, #261226 0%, #100a1c 100%);
   font-family: monospace;
 }
 
 .calculator {
   width: 308px;
   margin: 20px auto 400px;
-  border: 3px solid white;
+  border: 1px solid rgba(108, 175, 197, 0.05);
 }
 
 .display {
   width: 298px;
-  background-color: white;
+  background-color: #160f27;
   height: 120px;
   font-size: 30px;
-  color: black;
+  color: #6cacc5;
   line-height: 120px;
   text-align: right;
   padding: 0 5px 0 5px;
-  overflow-x: scroll;
+  overflow-x: ellipsis;
   overflow-y: hidden;
+  transition: all 0.3s;
 }
 
 .keyboard {
@@ -32,7 +33,7 @@ body {
 
 .button {
   display: table-cell;
-  border: 1px solid white;
+  border: 1px solid rgba(108, 175, 197, 0.05);
   text-align: center;
   vertical-align: middle;
   padding: 10px;
@@ -40,8 +41,14 @@ body {
   width: 55px;
   height: 55px;
   cursor: pointer;
+  font-size: 25px;
+  color: #6cacc5;
+  transition: all 0.3s;
+}
+
+.button:hover {
+  background-color: #201e40;
   font-size: 35px;
-  color: white;
 }
 
 .button.clear {
