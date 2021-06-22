@@ -107,3 +107,8 @@ body, #app {
   align-items: center;
   justify-content: center;
 }
+
+.calculator.is-mobile .keyboard .keyboard-line .button:hover {
+  background-color: inherit;
+  font-size: 35px;
+}
