@@ -73,9 +73,10 @@ export default class App extends React.Component {
 
   render() {
     const calculation = this.state.calculation;
+    const isMobile =  typeof window.orientation !== undefined ? 'is-mobile' : '';
 
     return (
-      <div className="calculator">
+      <div className={`calculator ${isMobile}`}>
         <Display calculation={calculation}/>
         <Keyboard onClick={this.handleButtonClick}/>
       </div>
