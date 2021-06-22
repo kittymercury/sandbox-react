@@ -2,10 +2,12 @@ import React from 'react';
 
 export default class ListItem extends React.Component {
   render () {
+    const content = this.props.content;
+    const onDelete = () => this.props.onDelete(content);
 
     return (
-      <li>something tasty :)
-        <span className="delete">✖</span>
+      <li>{content}
+        <span className="delete" onClick={onDelete}>✖</span>
       </li>
     )
   }
