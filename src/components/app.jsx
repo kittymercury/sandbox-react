@@ -46,7 +46,7 @@ export default class App extends React.Component {
 
       case 'point':
         if (calculation) {
-          if (!calculation.endsWith('*') && !calculation.endsWith('/') && !calculation.endsWith('-') && !calculation.endsWith('+')) {
+          if (!calculation.endsWith('*') && !calculation.endsWith('/') && !calculation.endsWith('-') && !calculation.endsWith('+') && !calculation.endsWith('.')) {
             return this.setState({ calculation: calculation + content });
           } else {
             return this.setState({ calculation: calculation });
