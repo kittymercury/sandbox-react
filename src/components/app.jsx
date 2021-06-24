@@ -55,17 +55,15 @@ export default class App extends React.Component {
           this.setState({ calculation: '' });
         }
 
-        if (calculation.includes('.')) {
-          const indexOfPoint = calculation.split('').reverse().indexOf('.');
-          const operators = ['+', '-', '/', '*'];
-          const operatorIndexes = operators.map((operator) => calculation.split('').reverse().indexOf(operator));
-          const lastOperatorIndex = operatorIndexes.sort().reverse()[0];
-          const lastElementInCalculation = calculation.split('-').join(',').split('+').join(',').split('*').join(',').split('/').join(',').split(',').reverse()[0];
-          if (lastOperatorIndex && (lastOperatorIndex < indexOfPoint) && !calculation.endsWith('.') && !lastElementInCalculation.includes('.')) {
-             this.setState({ calculation: calculation + content });
-          } else {
-             this.setState({ calculation: calculation });
-          };
+        const indexOfPoint = calculation.split('').reverse().indexOf('.');
+        const operators = ['+', '-', '/', '*'];
+        const operatorIndexes = operators.map((operator) => calculation.split('').reverse().indexOf(operator));
+        const lastOperatorIndex = operatorIndexes.sort().reverse()[0];
+        const lastElementInCalculation = calculation.split('-').join(',').split('+').join(',').split('*').join(',').split('/').join(',').split(',').reverse()[0];
+        if (lastOperatorIndex && (lastOperatorIndex < indexOfPoint) &&  !lastElementInCalculation.includes('.')) {
+          return this.setState({ calculation: calculation + content });
+        } else {
+          return this.setState({ calculation: calculation });
         };
 
     }
