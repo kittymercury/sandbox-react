@@ -1,4 +1,67 @@
-.sidebar-content-example {
+html, body, #app, .chat {
+  margin: 0;
+  height: 100%;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.header {
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.content {
+  flex: 1;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.footer {
+  padding: 20px;
   display: flex;
   justify-content: space-around;
+}
+
+.contacts li,
+.chats li,
+.messages li {
+  padding: 10px;
+  border-bottom: 1px solid black;
+  cursor: pointer;
+}
+
+.contacts li span {
+  margin-right: 10px;
+}
+
+.contacts li span.offline {
+  font-size: 12px;
+  color: #999;
+}
+
+.contacts li span.online {
+  font-size: 12px;
+  color: green;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
