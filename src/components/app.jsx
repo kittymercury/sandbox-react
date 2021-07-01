@@ -84,48 +84,25 @@ export default class App extends React.Component {
 
         {(currentPage === 'Contacts') && (
           <div className="content contacts">
-            <ul>{users.map((user) => {
-              return (
-                <li>
-                  <span>{user.name}</span>
-                  <span className={user.status}>{user.status}</span>
-                </li>
-              );
-            })}</ul>
+
           </div>
         )}
 
         {(currentPage === 'Chats') && (
           <div className="content chats">
-            <ul>{chats.map((chat) => {
-              const participant = users.find((user) => user.id === chat.participants[1]);
-              return <li onClick={() => this.handleChatClick(chat)}>{participant.name}</li>
-            })}</ul>
+
           </div>
         )}
 
         {(currentPage === 'Settings') && (
           <div className="content settings">
-            {users.find((user) => user.id === currentUser).name}
+
           </div>
         )}
 
         {(currentPage === 'Messages') && (
           <div className="content messages">
-            <ul>
-              {messages.filter((message) => message.chatId === currentChat.id).map((message) => {
-                const user = users.find((user) => user.id === message.userId);
-                const isCurrentUsersMessage = message.userId === currentUser;
-                const style = { textAlign: isCurrentUsersMessage ? 'right' : 'left' };
-
-                return (
-                  <li>
-                    <div style={style}>{user.name} {message.time}</div>
-                    <div style={style}>{message.content}</div>
-                  </li>
-                );
-              })}
-            </ul>
+            
 
             <div style={{ display: 'flex' }}>
               <input style={{ flex: 1 }} type="text" value={chatInput} onChange={this.handleChangeChatInput} />
