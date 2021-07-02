@@ -21,9 +21,9 @@ export default class App extends React.Component {
       ],
 
       chats: [
-        { id: 1, participants: [ 7, 1 ] },
-        { id: 2, participants: [ 7, 6 ] },
-        { id: 3, participants: [ 7, 3 ] },
+        { id: 1, name: 'Cut Corners', participants: [ 7, 1 ] },
+        { id: 2, name: 'Olga Tkachuk', participants: [ 7, 6 ] },
+        { id: 3, name: 'Walter White', participants: [ 7, 3 ] },
       ],
 
       messages: [
@@ -37,7 +37,7 @@ export default class App extends React.Component {
     };
   }
 
-  handleClickButtonFooter = (page) => {
+  handleClickFooterButton = (page) => {
     this.setState({ currentPage: page })
   }
 
@@ -50,9 +50,9 @@ export default class App extends React.Component {
   }
 
   handleClickSendButton = (e) => {
+    const currentChat = this.state.currentChat;
     const currentUser = this.state.currentUser;
     const chatInput = this.state.chatInput;
-    const currentChat = this.state.currentChat;
     const messages = this.state.messages;
 
     const newMessage = {
@@ -61,9 +61,53 @@ export default class App extends React.Component {
       chatId: currentChat.id,
       time: new Date().toLocaleTimeString(),
       content: chatInput
+    };
+
+    const newMessages = messages.concat(newMessage);
+
+    this.setState({ messages: newMessages, chatInput: '' })
+  }
+
+  handleClickCreateNewChat = () => {
+    this.setState({ currentPage: 'Contacts' })
+  }
+
+  handleClickContact = (user) => {
+    const currentUser = this.state.currentUser;
+    const currentPage = this.state.currentPage;
+    const currentChat = this.state.currentChat;
+    const chats = this.state.chats;
+
+    const isChatExist = chats.find((chat) => chat.name === user.name);
+    if (isChatExist) return;
+
+
+    const newChat = {
+      id: +new Date,
+      name: user.name,
+      participants: [ currentUser, user.id ]
     }
 
-    this.setState({ chatInput: '', messages: messages.concat(newMessage) })
+    const newChats = chats.concat(newChat);
+
+    this.setState({ chats: newChats, currentPage: 'Messages', currentChat: newChat })
+
+  }
+
+  handleClickDeleteChat = (chatItem) => {
+    const chats = this.state.chats;
+
+    const filteredChats = chats.filter((chat) => chat !== chatItem);
+
+    this.setState({ chats: filteredChats, currentChat: null })
+  }
+
+  handleClickDeleteMessage = (messageItem) => {
+    const messages = this.state.messages;
+
+    const filteredMessages = messages.filter((message) => message !== messageItem);
+
+    this.setState({ messages: filteredMessages })
   }
 
   render() {
@@ -81,7 +125,7 @@ export default class App extends React.Component {
         <div className="header">
           <div className="pointer" style={{ width: '100px' }}>{(currentPage === 'Chats') ? 'Edit' : ''}</div>
           <div>{currentPage}</div>
-          <div className="pointer" style={{ width: '100px' }}>{(currentPage === 'Chats') ? 'Create new chat' : ''}</div>
+          <div className="pointer" style={{ width: '100px' }} onClick={this.handleClickCreateNewChat}>{(currentPage === 'Chats') ? 'Create new chat' : ''}</div>
         </div>
 
         {(currentPage === 'Contacts') && (
@@ -89,7 +133,7 @@ export default class App extends React.Component {
             <ul>
               {users.map((user) => {
                 return (
-                  <li>
+                  <li onClick={() => this.handleClickContact(user)}>
                     <span>{user.name}</span>
                     <span className={user.status}>{user.status}</span>
                   </li>
@@ -104,10 +148,10 @@ export default class App extends React.Component {
             <ul>
               {chats.map((chat) => {
                 const participant = users.find((user) => user.id === chat.participants[1]);
-
                 return (
-                  <li onClick={() => this.handleClickChat(chat)}>
-                    {participant.name}
+                  <li>
+                    <div className="name" onClick={() => this.handleClickChat(chat)}>{participant.name}</div>
+                    <div className="delete" onClick={() => this.handleClickDeleteChat(chat)}>X</div>
                   </li>
                 )
               })}
@@ -129,27 +173,31 @@ export default class App extends React.Component {
                 const user = users.find((user) => user.id === message.userId);
                 const isCurrentUsersMessage = message.userId === currentUser;
                 const style = { textAlign: isCurrentUsersMessage ? 'right' : 'left' };
+                const liStyle = { flexDirection: isCurrentUsersMessage ? 'row-reverse' : 'row' };
 
                 return (
-                  <li>
-                    <div style={style}>{user.name} {message.time}</div>
-                    <div style={style}>{message.content}</div>
+                  <li style={liStyle}>
+                    <div>
+                      <div style={style}>{user.name} {message.time}</div>
+                      <div style={style}>{message.content}</div>
+                    </div>
+                    <div className="delete" onClick={() => this.handleClickDeleteMessage(message)}>X</div>
                   </li>
                 )
               })}
             </ul>
 
             <div style={{ display: 'flex' }}>
-              <input style={{ flex: 1 }} type="text" placeholder="Type your message here" value={chatInput} onChange={this.handleChangeChatInput}/>
+              <input style={{ flex: 1 }} type="text" placeholder="Type your message here" value={chatInput} onChange={this.handleChangeChatInput} />
               <button onClick={this.handleClickSendButton}>Send</button>
             </div>
           </div>
         )}
 
         <div className="footer">
-          <button onClick={() => this.handleClickButtonFooter('Contacts')}>Contacts</button>
-          <button onClick={() => this.handleClickButtonFooter('Chats')}>Chats</button>
-          <button onClick={() => this.handleClickButtonFooter('Settings')}>Settings</button>
+          <button onClick={() => this.handleClickFooterButton('Contacts')}>Contacts</button>
+          <button onClick={() => this.handleClickFooterButton('Chats')}>Chats</button>
+          <button onClick={() => this.handleClickFooterButton('Settings')}>Settings</button>
         </div>
       </div>
     );

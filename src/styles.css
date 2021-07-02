@@ -46,6 +46,15 @@ ul {
   cursor: pointer;
 }
 
+.chats li .name {
+  flex: 1;
+}
+
+.chats li {
+  display: flex;
+  justify-content: space-between;
+}
+
 .contacts li span {
   margin-right: 10px;
 }
@@ -66,7 +75,21 @@ ul {
   justify-content: space-between;
 }
 
+.messages li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .you {
   font-size: 12px;
   color: #999;
+}
+
+.delete {
+
+}
+
+.delete:hover {
+  color: red;
 }
