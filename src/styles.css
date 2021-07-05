@@ -9,14 +9,157 @@ ul {
   list-style: none;
 }
 
-.pointer {
-  cursor: pointer;
+.features {
+  margin-top: 8px;
 }
 
-.chat {
+.features > li {
+  padding: 2px;
+  text-align: center;
+  border-bottom: 2px solid gray;
+  display: block;
+  position: relative;
+}
+
+.sub-menu {
+  display: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.sub-menu > li {
+  display: block;
+  align-items: center;
+  padding: 3px;
+  border-bottom: 1px solid gray;
+}
+
+.features > li:hover {
+  display: block;
+}
+
+/* light theme */
+
+.chat.light {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-color: #c9f0f7;
+  color: black;
+  font-family: monospace;
+  font-size: 18px;
+}
+
+.light .contacts li span.offline {
+  font-size: 12px;
+  color: #999;
+}
+
+.light .contacts li span.online {
+  font-size: 12px;
+  color: green;
+}
+
+.light .message-time {
+  color: #715656;
+  font-size: 12px;
+}
+
+.light .you {
+  font-size: 12px;
+  color: #776868;
+}
+
+.light .my-status {
+  margin-top: 5px;
+  font-size: 14px;
+  color: green;
+  border-bottom: 1px solid black;
+}
+
+.light .features li div:hover {
+  color: green;
+}
+
+.light .features > li:hover .sub-menu {
+  display: block;
+  background-color: #c9f0f7;
+  min-width: 100%;
+}
+
+.light .features li .sub-menu li:hover {
+  color: green;
+}
+
+.light .content {
+  flex: 1;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+/* ---------------- */
+
+/* dark theme */
+
+.chat.dark {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #3a4042;
+  color: white;
+  font-family: monospace;
+  font-size: 18px;
+}
+
+.dark .contacts li span.offline {
+  font-size: 12px;
+  color: #ccc;
+}
+
+.dark .contacts li span.online {
+  font-size: 12px;
+  color: #51ff51;
+}
+.dark .you {
+  font-size: 12px;
+  color: #51ff51;
+}
+
+.dark .message-time {
+  color: #62b574;
+  font-size: 12px;
+}
+
+.dark .my-status {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #51ff51;
+  border-bottom: 1px solid gray;
+}
+
+.features > li:hover .sub-menu {
+  display: block;
+  background-color: #3a4042;
+  min-width: 100%;
+}
+
+.dark .features li div:hover {
+  color: #51ff51;
+}
+
+.dark .features li .sub-menu li:hover {
+  color: #51ff51;
+}
+
+.dark .content {
+  flex: 1;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+}
+/* ---------------- */
+
+.pointer {
+  cursor: pointer;
 }
 
 .header {
@@ -26,11 +169,7 @@ ul {
   justify-content: space-between;
 }
 
-.content {
-  flex: 1;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-}
+
 
 .footer {
   padding: 20px;
@@ -59,16 +198,6 @@ ul {
   margin-right: 10px;
 }
 
-.contacts li span.offline {
-  font-size: 12px;
-  color: #999;
-}
-
-.contacts li span.online {
-  font-size: 12px;
-  color: green;
-}
-
 .messages {
   display: flex;
   flex-direction: column;
@@ -79,15 +208,6 @@ ul {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.you {
-  font-size: 12px;
-  color: #999;
-}
-
-.delete {
-
 }
 
 .delete:hover {
