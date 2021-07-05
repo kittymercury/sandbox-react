@@ -53,7 +53,7 @@ module.exports = {
         use:  [cacheLoader('/css'), 'style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
       },
       {
-        test: /\.(jpg|png|gif|svg|ico)$/,
+        test: /\.(jpg|jpeg|png|gif|svg|ico)$/,
         use: ['file-loader'],
       },
       {

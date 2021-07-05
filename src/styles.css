@@ -46,7 +46,7 @@ ul {
   justify-content: space-between;
   background-color: #c9f0f7;
   color: black;
-  font-family: monospace;
+  font-family: sans-serif;
   font-size: 18px;
 }
 
@@ -91,6 +91,14 @@ ul {
   color: green;
 }
 
+.light .contacts li,
+.light .chats li,
+.light .messages li {
+  padding: 10px;
+  border-bottom: 1px solid black;
+  cursor: pointer;
+}
+
 .light .content {
   flex: 1;
   border-top: 1px solid black;
@@ -123,6 +131,7 @@ ul {
 .dark .you {
   font-size: 12px;
   color: #51ff51;
+  display: flex;
 }
 
 .dark .message-time {
@@ -151,6 +160,14 @@ ul {
   color: #51ff51;
 }
 
+.dark .contacts li,
+.dark .chats li,
+.dark .messages li {
+  padding: 10px;
+  border-bottom: 1px solid gray;
+  cursor: pointer;
+}
+
 .dark .content {
   flex: 1;
   border-top: 1px solid gray;
@@ -169,20 +186,10 @@ ul {
   justify-content: space-between;
 }
 
-
-
 .footer {
   padding: 20px;
   display: flex;
   justify-content: space-around;
-}
-
-.contacts li,
-.chats li,
-.messages li {
-  padding: 10px;
-  border-bottom: 1px solid black;
-  cursor: pointer;
 }
 
 .chats li .name {
@@ -212,4 +219,31 @@ ul {
 
 .delete:hover {
   color: red;
+}
+
+.change-avatar > div > button {
+  margin-bottom: 3px;
+}
+
+.edit-profile.content {
+  font-size: 14px;
+}
+
+.avatar {
+  border-radius: 50px;
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+}
+
+.contacts li span {
+    text-align: center;
+    line-height: 2em;
+    margin-left: 10px;
+}
+
+.my-avatar-image {
+  border-radius: 50px;
+  width: 100px;
+  height: 100px;  
 }

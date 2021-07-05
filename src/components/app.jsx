@@ -1,5 +1,13 @@
 import React from 'react';
 
+import cornersImg from './tg-imgs/corners.jpeg';
+import jesseImg from './tg-imgs/jesse.jpg';
+import walterImg from './tg-imgs/walter.jpeg';
+import honkaImg from './tg-imgs/honka.jpg';
+import noAvatar from './tg-imgs/no-avatar.png';
+import freddieImg from './tg-imgs/freddie.jpeg';
+import newAvatar from './tg-imgs/new-avatar.jpg';
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -10,15 +18,17 @@ export default class App extends React.Component {
       currentChat: '',
       chatInput: '',
       theme: 'light',
+      changeNameInput: '',
+      avatarChangeInput: '',
 
       users: [
-        { id: 1, name: 'Cut Corners', status: 'online', avatar: './tg-imgs/corners.jpeg' },
-        { id: 2, name: 'Jesse Pinkman', status: 'online', avatar: './tg-imgs/jesse.jpg' },
-        { id: 3, name: 'Walter White', status: 'offline', avatar: './tg-imgs/walter.jpeg' },
-        { id: 4, name: 'Herr Honka', status: 'online', avatar: './tg-imgs/honka.jpg' },
-        { id: 5, name: 'Sasuke Uchiha', status: 'offline', avatar: './tg-imgs/unknown-woman.png' },
-        { id: 6, name: 'Olga Tkachuk', status: 'offline', avatar: './tg-imgs/unknown-woman.png' },
-        { id: 7, name: 'Freddie Mercury', status: 'online', avatar: './tg-imgs/freddie.jpeg' },
+        { id: 1, name: 'Cut Corners', status: 'online', avatar: cornersImg },
+        { id: 2, name: 'Jesse Pinkman', status: 'online', avatar: jesseImg },
+        { id: 3, name: 'Walter White', status: 'offline', avatar: walterImg },
+        { id: 4, name: 'Herr Honka', status: 'online', avatar: honkaImg },
+        { id: 5, name: 'Sasuke Uchiha', status: 'offline', avatar: noAvatar },
+        { id: 6, name: 'Olga Tkachuk', status: 'offline', avatar: noAvatar },
+        { id: 7, name: 'Freddie Mercury', status: 'online', avatar: freddieImg },
       ],
 
       chats: [
@@ -117,12 +127,83 @@ export default class App extends React.Component {
     this.setState({ theme: 'dark' })
   }
 
+  handleClickEditProfile = () => {
+    this.setState({ currentPage: 'Edit profile' })
+  }
+
+  handleChangeName = (e) => {
+    this.setState({ changeNameInput: e.target.value })
+  }
+
+  handleClickChangeName = (e) => {
+   const currentUser = this.state.currentUser;
+   const users = this.state.users;
+   const changeNameInput = this.state.changeNameInput;
+
+   const status = users.find((user) => user.id === currentUser).status;
+   const avatar = users.find((user) => user.id === currentUser).avatar;
+
+   const newUserInfo = {
+     id: currentUser,
+     name: changeNameInput,
+     status: status,
+     avatar: avatar
+   }
+
+   const newUsers = users.slice(0, -1).concat(newUserInfo);
+
+   this.setState({ users: newUsers, changeNameInput: ''})
+  }
+
+  handleClickRemoveAvatar = () => {
+    const currentUser = this.state.currentUser;
+    const users = this.state.users;
+    const status = users.find((user) => user.id === currentUser).status;
+    const name = users.find((user) => user.id === currentUser).name;
+
+    const newUserInfo = {
+      id: currentUser,
+      name: name,
+      status: status,
+      avatar: noAvatar
+    }
+
+    const newUsers = users.slice(0, -1).concat(newUserInfo);
+
+    this.setState({ users: newUsers })
+  }
+
+  handleChangeAvatarInput = (e) => {
+    this.setState({ avatarChangeInput: e.target.value })
+  }
+
+  handleClickChangeAvatarSubmitButton = (e) => {
+    const currentUser = this.state.currentUser;
+    const users = this.state.users;
+    const status = users.find((user) => user.id === currentUser).status;
+    const name = users.find((user) => user.id === currentUser).name;
+    const avatarChangeInput = this.state.avatarChangeInput;
+
+    const newUserInfo = {
+      id: currentUser,
+      name: name,
+      status: status,
+      avatar: avatarChangeInput
+    }
+
+    const newUsers = users.slice(0, -1).concat(newUserInfo);
+
+    this.setState({ users: newUsers, avatarChangeInput: '' })
+  }
+
+
   render() {
     const currentUser = this.state.currentUser;
     const currentPage = this.state.currentPage;
     const currentChat = this.state.currentChat;
     const chatInput = this.state.chatInput;
     const theme = this.state.theme;
+    const changeNameInput = this.state.changeNameInput;
 
     const users = this.state.users;
     const chats = this.state.chats;
@@ -143,8 +224,8 @@ export default class App extends React.Component {
                 return (
                   <li onClick={() => this.handleClickContact(user)}>
                     <img className="avatar" src={user.avatar} />
-                    <span>{user.name}</span>
-                    <span className={user.status}>{user.status}</span>
+                    <span> {user.name}</span>
+                    <span className={user.status}> {user.status}</span>
                   </li>
                 )
               })}
@@ -171,10 +252,10 @@ export default class App extends React.Component {
         {(currentPage === 'Settings') && (
           <div className="content settings">
             <span>{users.find((user) => user.id === currentUser).name}</span>
-            <div className="my-avatar">
-              <img src={users.find((user) => user.id === currentUser).avatar} />
-            </div>
             <span className="you"> (you)</span>
+            <div className="my-avatar">
+              <img className="my-avatar-image" src={users.find((user) => user.id === currentUser).avatar} />
+            </div>
             <div className="my-status">{users.find((user) => user.id === currentUser).status}</div>
             <ul className="features">
               <li>
@@ -185,7 +266,7 @@ export default class App extends React.Component {
                 </ul>
               </li>
               <li>
-                <div>Edit personal information</div>
+                <div onClick={this.handleClickEditProfile}>Edit profile</div>
               </li>
               <li>
                 <div>Language</div>
@@ -225,6 +306,29 @@ export default class App extends React.Component {
               <button onClick={this.handleClickSendButton}>Send</button>
             </div>
 
+          </div>
+        )}
+
+        {(currentPage === 'Edit profile') && (
+          <div className="edit-profile content">
+            <div className="change-name">
+              <h4>Change name</h4>
+              <input type="text" value={changeNameInput} placeholder={users.find((user) => user.id === currentUser).name} onChange={this.handleChangeName} />
+              <button className="submit" onClick={this.handleClickChangeName}>Submit</button>
+            </div>
+
+            <div className="change-avatar">
+              <h4>Change avatar</h4>
+              <div>
+                <button onClick={this.handleClickRemoveAvatar}>Remove avatar</button>
+              </div>
+              <div>
+                <input type="file" name="avatar" accept="image/png, image/jpeg, image/jpg" onChange={this.handleChangeAvatarInput}/>
+                <p>
+                  <button onClick={this.handleClickChangeAvatarSubmitButton}>Submit</button>
+                </p>
+              </div>
+            </div>
           </div>
         )}
 
