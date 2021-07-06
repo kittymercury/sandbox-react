@@ -1,12 +1,20 @@
 import React from 'react';
 
+import Chats from './chats';
+import Contacts from './contacts';
+import Footer from './footer';
+import Header from './header';
+import Messages from './messages';
+// import SettingsEdit from './settings-edit';
+// import SettingsThemes from './settings-themes';
+// import Settings from './settings';
+
 import cornersImg from './tg-imgs/corners.jpeg';
 import jesseImg from './tg-imgs/jesse.jpg';
 import walterImg from './tg-imgs/walter.jpeg';
 import honkaImg from './tg-imgs/honka.jpg';
 import noAvatar from './tg-imgs/no-avatar.png';
 import freddieImg from './tg-imgs/freddie.jpeg';
-import newAvatar from './tg-imgs/new-avatar.jpg';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -48,9 +56,47 @@ export default class App extends React.Component {
     };
   }
 
+  // handlers for Header
+
+  handleClickCreateNewChat = () => {
+    this.setState({ currentPage: 'Contacts' });
+  }
+
+  // ----------------------------------------
+
+  // handlers for Footer
+
   handleClickButtonFooter = (page) => {
     this.setState({ currentPage: page })
   }
+
+  // ---------------------------------------
+
+  // handlers for Contacts
+
+  handleClickContact = (user) => {
+    const currentUser = this.state.currentUser;
+    const currentPage = this.state.currentPage;
+    const currentChat = this.state.currentChat;
+    const chats = this.state.chats;
+
+    const isChatExist = chats.find((chat) => chat.name === user.name);
+    if (isChatExist) return;
+
+    const newChat = {
+      id: +new Date(),
+      name: user.name,
+      participants: [ currentUser, user.id ]
+    }
+
+    const newChats = chats.concat(newChat);
+
+    this.setState({ currentChat: newChat, currentPage: 'Messages', chats: newChats })
+  }
+
+  // -----------------------------------------
+
+  // handlers for Chats
 
   handleClickChat = (chat) => {
     this.setState({ currentChat: chat, currentPage: 'Messages' })
@@ -62,6 +108,10 @@ export default class App extends React.Component {
 
     this.setState({ chats: filteredChats })
   }
+
+  // ----------------------------------------------------
+
+  // handlers for Messages
 
   handleChangeChatInput = (e) => {
     this.setState({ chatInput: e.target.value });
@@ -95,29 +145,9 @@ export default class App extends React.Component {
     this.setState({ messages: filteredMessages })
   }
 
-  handleClickCreateNewChat = () => {
-    this.setState({ currentPage: 'Contacts' });
-  }
+  // -------------------------------------------------------
 
-  handleClickContact = (user) => {
-    const currentUser = this.state.currentUser;
-    const currentPage = this.state.currentPage;
-    const currentChat = this.state.currentChat;
-    const chats = this.state.chats;
-
-    const isChatExist = chats.find((chat) => chat.name === user.name);
-    if (isChatExist) return;
-
-    const newChat = {
-      id: +new Date(),
-      name: user.name,
-      participants: [ currentUser, user.id ]
-    }
-
-    const newChats = chats.concat(newChat);
-
-    this.setState({ currentChat: newChat, currentPage: 'Messages', chats: newChats })
-  }
+  // handlers for Settings
 
   handleClickLightTheme = () => {
     this.setState({ theme: 'light' })
@@ -196,6 +226,7 @@ export default class App extends React.Component {
     this.setState({ users: newUsers, avatarChangeInput: '' })
   }
 
+  // ----------------------------------------------------------
 
   render() {
     const currentUser = this.state.currentUser;
@@ -211,45 +242,17 @@ export default class App extends React.Component {
 
     return (
       <div className={`chat ${theme}`}>
-        <div className="header">
-          <div className="pointer" style={{ width: '100px' }}>{(currentPage === 'Chats') ? 'Edit' : ''}</div>
-          <div>{currentPage}</div>
-          <div className="pointer" style={{ width: '100px' }} onClick={this.handleClickCreateNewChat}>{(currentPage === 'Chats') ? 'Create new chat' : ''}</div>
-        </div>
+        <Header currentPage={currentPage} onClick={this.handleClickCreateNewChat} />
 
         {(currentPage === 'Contacts') && (
-          <div className="content contacts">
-            <ul>
-              {users.map((user) => {
-                return (
-                  <li onClick={() => this.handleClickContact(user)}>
-                    <img className="avatar" src={user.avatar} />
-                    <span> {user.name}</span>
-                    <span className={user.status}> {user.status}</span>
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
+          <Contacts onClick={this.handleClickContact} users={users} />
         )}
 
         {(currentPage === 'Chats') && (
-          <div className="content chats">
-            <ul>
-              {chats.map((chat) => {
-                const participant = users.find((user) => user.id === chat.participants[1]);
-                return (
-                  <li>
-                    <div className="name" onClick={() => this.handleClickChat(chat)}>{participant.name}</div>
-                    <div className="delete" onClick={() => this.handleClickDeleteChat(chat)}>X</div>
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
+          <Chats onClick={this.handleClickChat} onDelete={this.handleClickDeleteChat} users={users} chats={chats} />
         )}
 
-        {(currentPage === 'Settings') && (
+        {/* {(currentPage === 'Settings') && (
           <div className="content settings">
             <span>{users.find((user) => user.id === currentUser).name}</span>
             <span className="you"> (you)</span>
@@ -276,40 +279,13 @@ export default class App extends React.Component {
               </li>
             </ul>
           </div>
-        )}
+        )} */}
 
         {(currentPage === 'Messages') && (
-          <div className="content messages">
-            <ul>
-              {messages.filter((message) => message.chatId === currentChat.id).map((message) => {
-                const user = users.find((user) => user.id === message.userId);
-                const isCurrentUsersMessage = message.userId === currentUser;
-                const style = { textAlign: isCurrentUsersMessage ? 'right' : 'left' };
-                const liStyle = { flexDirection: isCurrentUsersMessage ? 'row-reverse' : 'row' };
-
-                return (
-                  <li style={liStyle}>
-                    <div>
-                      <div style={style}>
-                        <span>{user.name}</span>
-                        <span className="message-time"> {message.time}</span>
-                      </div>
-                      <div style={style}>{message.content}</div>
-                    </div>
-                    <div className="delete" onClick={() => this.handleClickDeleteMessage(message)}>X</div>
-                  </li>
-                )
-              })}
-            </ul>
-            <div style={{ display: 'flex' }}>
-              <input style={{ flex: 1 }} placeholder="Type your message here" value={chatInput} onChange={this.handleChangeChatInput} />
-              <button onClick={this.handleClickSendButton}>Send</button>
-            </div>
-
-          </div>
+          <Messages messages={messages} users={users} currentUser={currentUser} onDelete={this.handleClickDeleteMessage} />
         )}
 
-        {(currentPage === 'Edit profile') && (
+        {/* {(currentPage === 'Edit profile') && (
           <div className="edit-profile content">
             <div className="change-name">
               <h4>Change name</h4>
@@ -330,13 +306,9 @@ export default class App extends React.Component {
               </div>
             </div>
           </div>
-        )}
+        )} */}
 
-        <div className="footer">
-          <button onClick={() => this.handleClickButtonFooter('Contacts')}>Contacts</button>
-          <button onClick={() => this.handleClickButtonFooter('Chats')}>Chats</button>
-          <button onClick={() => this.handleClickButtonFooter('Settings')}>Settings</button>
-        </div>
+      <Footer onClick={this.handleClickButtonFooter} />
       </div>
     );
   }
