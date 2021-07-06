@@ -5,6 +5,10 @@ export default class Messages extends React.Component {
     const messages = this.props.messages;
     const users = this.props.users;
     const currentUser = this.props.currentUser;
+    const currentChat = this.props.currentChat;
+    const chatInput = this.props.chatInput;
+    const onClick = this.props.onSendClick;
+    const onChange = this.props.onChange;
 
     return (
       <div className="content messages">
@@ -31,8 +35,8 @@ export default class Messages extends React.Component {
           })}
         </ul>
         <div style={{ display: 'flex' }}>
-          <input style={{ flex: 1 }} placeholder="Type your message here" value={chatInput} onChange={this.handleChangeChatInput} />
-          <button onClick={this.handleClickSendButton}>Send</button>
+          <input style={{ flex: 1 }} placeholder="Type your message here" value={chatInput} onChange={onChange} />
+          <button onClick={onClick}>Send</button>
         </div>
 
       </div>

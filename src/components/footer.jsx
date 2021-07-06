@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class Footer extends React.Component {
   render () {
-    const handleClick = this.props.onClick;
+    const handleClick = (page) => () => this.props.onClick(page);
 
     return (
       <div className="footer">

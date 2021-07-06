@@ -77,17 +77,20 @@ ul {
   border-bottom: 1px solid black;
 }
 
+.light .sub-menu li:hover {
+  color: green;
+}
+
 .light .features li div:hover {
   color: green;
 }
 
-.light .features > li:hover .sub-menu {
+.light .sub-menu {
   display: block;
-  background-color: #c9f0f7;
   min-width: 100%;
 }
 
-.light .features li .sub-menu li:hover {
+.light li .sub-menu li:hover {
   color: green;
 }
 
@@ -115,7 +118,7 @@ ul {
   justify-content: space-between;
   background-color: #3a4042;
   color: white;
-  font-family: monospace;
+  font-family: sans-serif;
   font-size: 18px;
 }
 
@@ -146,17 +149,17 @@ ul {
   border-bottom: 1px solid gray;
 }
 
-.features > li:hover .sub-menu {
+.dark .sub-menu {
   display: block;
   background-color: #3a4042;
   min-width: 100%;
 }
 
-.dark .features li div:hover {
+.dark li:hover {
   color: #51ff51;
 }
 
-.dark .features li .sub-menu li:hover {
+.dark .sub-menu li:hover {
   color: #51ff51;
 }
 
@@ -245,5 +248,5 @@ ul {
 .my-avatar-image {
   border-radius: 50px;
   width: 100px;
-  height: 100px;  
+  height: 100px;
 }

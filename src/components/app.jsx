@@ -5,9 +5,10 @@ import Contacts from './contacts';
 import Footer from './footer';
 import Header from './header';
 import Messages from './messages';
-// import SettingsEdit from './settings-edit';
-// import SettingsThemes from './settings-themes';
-// import Settings from './settings';
+import SettingsEdit from './settings-edit';
+import SettingsThemes from './settings-themes';
+import Settings from './settings';
+import ContactInfo from './contact-info';
 
 import cornersImg from './tg-imgs/corners.jpeg';
 import jesseImg from './tg-imgs/jesse.jpg';
@@ -149,6 +150,10 @@ export default class App extends React.Component {
 
   // handlers for Settings
 
+  handleClickThemes = () => {
+    this.setState({ currentPage: 'Themes' })
+  }
+
   handleClickLightTheme = () => {
     this.setState({ theme: 'light' })
   }
@@ -252,61 +257,21 @@ export default class App extends React.Component {
           <Chats onClick={this.handleClickChat} onDelete={this.handleClickDeleteChat} users={users} chats={chats} />
         )}
 
-        {/* {(currentPage === 'Settings') && (
-          <div className="content settings">
-            <span>{users.find((user) => user.id === currentUser).name}</span>
-            <span className="you"> (you)</span>
-            <div className="my-avatar">
-              <img className="my-avatar-image" src={users.find((user) => user.id === currentUser).avatar} />
-            </div>
-            <div className="my-status">{users.find((user) => user.id === currentUser).status}</div>
-            <ul className="features">
-              <li>
-                <div>Themes</div>
-                <ul className="sub-menu">
-                  <li onClick={this.handleClickLightTheme}>Light</li>
-                  <li onClick={this.handleClickDarkTheme}>Dark</li>
-                </ul>
-              </li>
-              <li>
-                <div onClick={this.handleClickEditProfile}>Edit profile</div>
-              </li>
-              <li>
-                <div>Language</div>
-              </li>
-              <li>
-                <div>Confidentiality</div>
-              </li>
-            </ul>
-          </div>
-        )} */}
-
-        {(currentPage === 'Messages') && (
-          <Messages messages={messages} users={users} currentUser={currentUser} onDelete={this.handleClickDeleteMessage} />
+        {(currentPage === 'Settings') && (
+          <Settings users={users} currentUser={currentUser} onClickEditProfile={this.handleClickEditProfile} onClickThemes={this.handleClickThemes} />
         )}
 
-        {/* {(currentPage === 'Edit profile') && (
-          <div className="edit-profile content">
-            <div className="change-name">
-              <h4>Change name</h4>
-              <input type="text" value={changeNameInput} placeholder={users.find((user) => user.id === currentUser).name} onChange={this.handleChangeName} />
-              <button className="submit" onClick={this.handleClickChangeName}>Submit</button>
-            </div>
+        {(currentPage === 'Messages') && (
+          <Messages messages={messages} users={users} currentChat={currentChat} currentUser={currentUser} onDelete={this.handleClickDeleteMessage} onChange={this.handleChangeChatInput} chatInput={chatInput} onSendClick={this.handleClickSendButton} />
+        )}
 
-            <div className="change-avatar">
-              <h4>Change avatar</h4>
-              <div>
-                <button onClick={this.handleClickRemoveAvatar}>Remove avatar</button>
-              </div>
-              <div>
-                <input type="file" name="avatar" accept="image/png, image/jpeg, image/jpg" onChange={this.handleChangeAvatarInput}/>
-                <p>
-                  <button onClick={this.handleClickChangeAvatarSubmitButton}>Submit</button>
-                </p>
-              </div>
-            </div>
-          </div>
-        )} */}
+        {(currentPage === 'Themes') && (
+          <SettingsThemes onClickDarkTheme={this.handleClickDarkTheme} onClickLightTheme={this.handleClickLightTheme} />
+        )}
+
+        {(currentPage === 'Edit profile') && (
+          <SettingsEdit changeNameInput={changeNameInput} users={users} currentUser={currentUser} onChangeName={this.handleChangeName} onClickSubmitNewName={this.handleClickChangeName} onClickRemoveAvatar={this.handleClickRemoveAvatar} onChangeInputFile={this.handleChangeAvatarInput} onClickSubmitNewAvatar={this.handleClickChangeAvatarSubmitButton} />
+        )}
 
       <Footer onClick={this.handleClickButtonFooter} />
       </div>

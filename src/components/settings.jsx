@@ -1,14 +1,12 @@
 import React from 'react';
-import SettingsThemes from './settings-themes';
+
 
 export default class Settings extends React.Component {
   render () {
     const users = this.props.users;
     const currentUser = this.props.currentUser;
-    const onClickDarkTheme = this.props.onClickDarkTheme;
-    const onClickLightTheme = this.props.onClickLightTheme;
     const onClickEditProfile = this.props.onClickEditProfile;
-
+    const onClickThemes = this.props.onClickThemes;
 
     return (
       <div className="content settings">
@@ -20,20 +18,16 @@ export default class Settings extends React.Component {
         <div className="my-status">{users.find((user) => user.id === currentUser).status}</div>
         <ul className="features">
           <li>
-            <SettingsThemes onClickDarkTheme={onClickDarkTheme} onClickLightTheme={onClickLightTheme}/>
+            <div onClick={onClickThemes}>Themes</div>
           </li>
           <li>
-            <div onClick={this.handleClickEditProfile}>Edit profile</div>
-          </li>
-          <li>
-            <div>Language</div>
+            <div onClick={onClickEditProfile}>Edit profile</div>
           </li>
           <li>
             <div>Confidentiality</div>
           </li>
         </ul>
       </div>
-    )}
     )
   }
 }
