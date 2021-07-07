@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Authentication from './authentication';
+import Registration from './registration';
 import Chats from './chats';
 import Contacts from './contacts';
 import Footer from './footer';
@@ -22,28 +24,30 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
-      currentUser: 7,
-      currentPage: 'Chats',
+      currentUser: '',
+      currentPage: 'Authentication',
       currentChat: '',
       chatInput: '',
       theme: 'light',
       changeNameInput: '',
       avatarChangeInput: '',
+      loginInputValueAuthentication: '',
+      passwordInputValueAuthentication: '',
+      loginInputValueRegistration: '',
+      passwordInputValueRegistration: '',
+      nameInputValueRegistration: '',
+      avatarInputValueRegistration: '',
 
       users: [
-        { id: 1, name: 'Cut Corners', status: 'online', avatar: cornersImg },
+        { id: 1, name: 'Cut Corners', status: 'online', avatar: cornersImg, login: '1', password: '1' },
         { id: 2, name: 'Jesse Pinkman', status: 'online', avatar: jesseImg },
         { id: 3, name: 'Walter White', status: 'offline', avatar: walterImg },
-        { id: 4, name: 'Herr Honka', status: 'online', avatar: honkaImg },
-        { id: 5, name: 'Sasuke Uchiha', status: 'offline', avatar: noAvatar },
         { id: 6, name: 'Olga Tkachuk', status: 'offline', avatar: noAvatar },
-        { id: 7, name: 'Freddie Mercury', status: 'online', avatar: freddieImg },
+        { id: 7, name: 'Mercury', status: 'online', avatar: freddieImg, login: '2', password: '2' },
       ],
 
       chats: [
-        { id: 1, name: 'Cut Corners', participants: [ 7, 1 ] },
-        { id: 2, name: 'Olga Tkachuk', participants: [ 7, 6 ] },
-        { id: 3, name: 'Walter White', participants: [ 7, 3 ] },
+        { id: 1, participants: [ 7, 1 ] },
       ],
 
       messages: [
@@ -75,19 +79,24 @@ export default class App extends React.Component {
 
   // handlers for Contacts
 
-  handleClickContact = (user) => {
+  handleClickContact = (userContact) => {
     const currentUser = this.state.currentUser;
     const currentPage = this.state.currentPage;
     const currentChat = this.state.currentChat;
     const chats = this.state.chats;
+    const users = this.state.users;
 
-    const isChatExist = chats.find((chat) => chat.name === user.name);
+    const userToChat = users.find((user) => user.id === userContact.id).id;
+
+    const isChatExist = chats.find((chat) => chat.participants.includes(userToChat) === true);
+
     if (isChatExist) return;
+
 
     const newChat = {
       id: +new Date(),
-      name: user.name,
-      participants: [ currentUser, user.id ]
+      name: userContact.name,
+      participants: [ currentUser, userContact.id ]
     }
 
     const newChats = chats.concat(newChat);
@@ -231,7 +240,84 @@ export default class App extends React.Component {
     this.setState({ users: newUsers, avatarChangeInput: '' })
   }
 
-  // ----------------------------------------------------------
+  // ---------------------------------------------------------
+
+  // handlers for Authentication
+
+  handleChangeLoginAuthentication = (e) => {
+    this.setState({ loginInputValueAuthentication: e.target.value })
+  }
+
+  handleChangePasswordAuthentication = (e) => {
+    this.setState({ passwordInputValueAuthentication: e.target.value })
+  }
+
+  handleClickLogIn = (e) => {
+    const loginInputValueAuthentication = this.state.loginInputValueAuthentication;
+    const passwordInputValueAuthentication = this.state.passwordInputValueAuthentication;
+    const users = this.state.users;
+    const currentUser = users.find((user) => {
+      if ((user.login === loginInputValueAuthentication) && (user.password === passwordInputValueAuthentication)) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    if (currentUser) {
+      this.setState({ currentUser: currentUser.id, currentPage: 'Chats', loginInputValueAuthentication: '', passwordInputValueAuthentication: '' })
+    } else {
+      alert('Wrong credentials');
+    }
+  }
+
+  handleClickOpenRegistration = () => {
+    this.setState({ currentPage: 'Registration' })
+  }
+
+
+  // ---------------------------------------------
+
+  // handlers for Registration
+
+  handleChangeLoginRegistration = (e) => {
+    this.setState({ loginInputValueRegistration: e.target.value })
+  }
+
+  handleChangePasswordRegistration = (e) => {
+    this.setState({ passwordInputValueRegistration: e.target.value })
+  }
+
+  handleChangeNameRegistration = (e) => {
+    this.setState({ nameInputValueRegistration: e.target.value })
+  }
+
+  handleChangeInputFileRegistration = (e) => {
+    this.setState({ inputFileValueRegistration: e.target.value })
+  }
+
+  handleClickSignUp = (e) => {
+    const loginInputValueRegistration = this.state.loginInputValueRegistration;
+    const passwordInputValueRegistration = this.state.passwordInputValueRegistration;
+    const nameInputValueRegistration = this.state.nameInputValueRegistration;
+    const inputFileValueRegistration = this.state.inputFileValueRegistration;
+    const users = this.state.users;
+    const currentUser = this.state.currentUser;
+
+    const newUser = {
+      id: +new Date(),
+      name: nameInputValueRegistration,
+      status: 'online',
+      avatar: inputFileValueRegistration,
+      login: loginInputValueRegistration,
+      password: passwordInputValueRegistration,
+    }
+
+    const newUsers = users.concat(newUser);
+
+    this.setState({ currentUser: newUser.id, users: newUsers, currentPage: 'Chats' })
+  }
+
+  // ------------------------------------------------
 
   render() {
     const currentUser = this.state.currentUser;
@@ -240,6 +326,12 @@ export default class App extends React.Component {
     const chatInput = this.state.chatInput;
     const theme = this.state.theme;
     const changeNameInput = this.state.changeNameInput;
+    const loginInputValueAuthentication = this.state.loginInputValueAuthentication;
+    const passwordInputValueAuthentication = this.state.passwordInputValueAuthentication;
+    const avatarInputValueRegistration = this.state.avatarInputValueRegistration;
+    const loginInputValueRegistration = this.state.loginInputValueRegistration;
+    const passwordInputValueRegistration = this.state.passwordInputValueRegistration;
+    const nameInputValueRegistration = this.state.nameInputValueRegistration;
 
     const users = this.state.users;
     const chats = this.state.chats;
@@ -249,12 +341,20 @@ export default class App extends React.Component {
       <div className={`chat ${theme}`}>
         <Header currentPage={currentPage} onClick={this.handleClickCreateNewChat} />
 
+        {(currentPage === 'Authentication') && (
+          <Authentication loginInputValueAuthentication={loginInputValueAuthentication} onChangeLoginAuthentication={this.handleChangeLoginAuthentication} passwordInputValueAuthentication={passwordInputValueAuthentication} onChangePasswordAuthentication={this.handleChangePasswordAuthentication} onClickLogIn={this.handleClickLogIn} onClickOpenRegistration={this.handleClickOpenRegistration} />
+        )}
+
+        {(currentPage === 'Registration') && (
+          <Registration loginInputValueRegistration={loginInputValueRegistration} onChangeLoginRegistration={this.handleChangeLoginRegistration} passwordInputValueRegistration={passwordInputValueRegistration} onChangePasswordRegistration={this.handleChangePasswordRegistration} nameInputValueRegistration={nameInputValueRegistration} onChangeNameRegistration={this.handleChangeNameRegistration} avatarInputValueRegistration={avatarInputValueRegistration} onChangeInputFileRegistration={this.handleChangeInputFileRegistration} onClickSignUp={this.handleClickSignUp} />
+        )}
+
         {(currentPage === 'Contacts') && (
           <Contacts onClick={this.handleClickContact} users={users} />
         )}
 
         {(currentPage === 'Chats') && (
-          <Chats onClick={this.handleClickChat} onDelete={this.handleClickDeleteChat} users={users} chats={chats} />
+          <Chats currentUser={currentUser} onClick={this.handleClickChat} onDelete={this.handleClickDeleteChat} users={users} chats={chats} />
         )}
 
         {(currentPage === 'Settings') && (
@@ -272,9 +372,10 @@ export default class App extends React.Component {
         {(currentPage === 'Edit profile') && (
           <SettingsEdit changeNameInput={changeNameInput} users={users} currentUser={currentUser} onChangeName={this.handleChangeName} onClickSubmitNewName={this.handleClickChangeName} onClickRemoveAvatar={this.handleClickRemoveAvatar} onChangeInputFile={this.handleChangeAvatarInput} onClickSubmitNewAvatar={this.handleClickChangeAvatarSubmitButton} />
         )}
-
-      <Footer onClick={this.handleClickButtonFooter} />
-      </div>
+      {(![ 'Authentication', 'Registration' ].includes(currentPage)) && (
+        <Footer onClick={this.handleClickButtonFooter} />
+      )}
+    </div>
     );
   }
 };
