@@ -8,11 +8,12 @@ export default class Contacts extends React.Component {
         <div className="content contacts">
           <ul>
             {users.map((user) => {
-              const onClick = () => this.props.onClick(user);
+              const onClickUserName = () => this.props.onClickUserName(user);
+              const onClickAvatar = () => this.props.onClickAvatar(user);
               return (
-                <li onClick={onClick}>
-                  <img className="avatar" src={user.avatar}/>
-                  <span> {user.name}</span>
+                <li>
+                  <img className="avatar" src={user.avatar} onClick={onClickAvatar} />
+                  <span onClick={onClickUserName}> {user.name}</span>
                   <span className={user.status}> {user.status}</span>
                 </li>
               )

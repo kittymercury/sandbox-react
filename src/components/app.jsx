@@ -2,20 +2,19 @@ import React from 'react';
 
 import Authentication from './authentication';
 import Registration from './registration';
-import Chats from './chats';
-import Contacts from './contacts';
-import Footer from './footer';
 import Header from './header';
-import Messages from './messages';
-import SettingsEdit from './settings-edit';
-import SettingsThemes from './settings-themes';
-import Settings from './settings';
+import Footer from './footer';
+import Contacts from './contacts';
 import ContactInfo from './contact-info';
+import Chats from './chats';
+import Messages from './messages';
+import Settings from './settings';
+import SettingsThemes from './settings-themes';
+import SettingsEdit from './settings-edit';
 
 import cornersImg from './tg-imgs/corners.jpeg';
 import jesseImg from './tg-imgs/jesse.jpg';
 import walterImg from './tg-imgs/walter.jpeg';
-import honkaImg from './tg-imgs/honka.jpg';
 import noAvatar from './tg-imgs/no-avatar.png';
 import freddieImg from './tg-imgs/freddie.jpeg';
 
@@ -27,6 +26,7 @@ export default class App extends React.Component {
       currentUser: '',
       currentPage: 'Authentication',
       currentChat: '',
+      userProfile: '',
       chatInput: '',
       theme: 'light',
       changeNameInput: '',
@@ -39,11 +39,11 @@ export default class App extends React.Component {
       avatarInputValueRegistration: '',
 
       users: [
-        { id: 1, name: 'Cut Corners', status: 'online', avatar: cornersImg, login: '1', password: '1' },
-        { id: 2, name: 'Jesse Pinkman', status: 'online', avatar: jesseImg },
-        { id: 3, name: 'Walter White', status: 'offline', avatar: walterImg },
-        { id: 6, name: 'Olga Tkachuk', status: 'offline', avatar: noAvatar },
-        { id: 7, name: 'Mercury', status: 'online', avatar: freddieImg, login: '2', password: '2' },
+        { id: 1, name: 'Cut Corners', status: 'online', contactNumber: '+380996661488', avatar: cornersImg, login: '1', password: '1' },
+        { id: 2, name: 'Jesse Pinkman', contactNumber: '+380996261488', status: 'online', avatar: jesseImg },
+        { id: 3, name: 'Walter White', status: 'offline' ,contactNumber: '+380996643488', avatar: walterImg },
+        { id: 6, name: 'Olga Tkachuk', status: 'offline', contactNumber: '+380996632488', avatar: noAvatar },
+        { id: 7, name: 'Mercury', status: 'online', contactNumber: '+380956543488', avatar: freddieImg, login: '2', password: '2' },
       ],
 
       chats: [
@@ -104,7 +104,40 @@ export default class App extends React.Component {
     this.setState({ currentChat: newChat, currentPage: 'Messages', chats: newChats })
   }
 
+  handleClickOpenContactInfo = (userContact) => {
+    const users = this.state.users;
+    const userClicked = users.find((user) => user.id === userContact.id);
+    const currentPage = this.state.currentPage;
+    const userProfile = this.state.userProfile;
+
+    this.setState({ userProfile: userClicked, currentPage: 'Contact info' })
+  }
+
   // -----------------------------------------
+
+  // handlers for ContactInfo
+
+  handleClickOpenChat = (chat) => {
+    if (chat) {
+      this.setState({ currentChat: chat, currentPage: 'Messages' })
+    } else {
+      const userProfile = this.state.userProfile;
+      const currentUser = this.state.currentUser;
+      const chats = this.state.chats;
+      const newChat = {
+        id: +new Date(),
+        name: userProfile.name,
+        participants: [ currentUser, userProfile.id ]
+      }
+
+      const newChats = chats.concat(newChat);
+
+      this.setState({ currentChat: newChat, currentPage: 'Messages', chats: newChats })
+    }
+
+  }
+
+  // ---------------------------------------
 
   // handlers for Chats
 
@@ -323,6 +356,7 @@ export default class App extends React.Component {
     const currentUser = this.state.currentUser;
     const currentPage = this.state.currentPage;
     const currentChat = this.state.currentChat;
+    const userProfile = this.state.userProfile;
     const chatInput = this.state.chatInput;
     const theme = this.state.theme;
     const changeNameInput = this.state.changeNameInput;
@@ -350,7 +384,11 @@ export default class App extends React.Component {
         )}
 
         {(currentPage === 'Contacts') && (
-          <Contacts onClick={this.handleClickContact} users={users} />
+          <Contacts onClickUserName={this.handleClickContact} onClickAvatar={this.handleClickOpenContactInfo} users={users} />
+        )}
+
+        {(currentPage === 'Contact info') && (
+          <ContactInfo users={users} userProfile={userProfile} onClickOpenChat={this.handleClickOpenChat} chats={chats} />
         )}
 
         {(currentPage === 'Chats') && (
