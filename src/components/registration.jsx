@@ -18,12 +18,14 @@ export default class Registration extends React.Component {
 
     return (
       <div className="content registration">
+        <form>
         <div className="registration-headline">Sign up</div>
           <p><input type="text" placeholder="Login" value={loginInputValueRegistration} onChange={onChangeLoginRegistration} /></p>
           <p><input type="password" placeholder="Password" value={passwordInputValueRegistration} onChange={onChangePasswordRegistration} /></p>
           <p><input type="text" placeholder="Your name" value={inputNameRegistration} onChange={onChangeNameRegistration} /></p>
-          <p><input type="file" name="avatar" accept="image/png, image/jpeg, image/jpg" value={inputFileValueRegistration} onChange={onChangeInputFileRegistration} /></p>
+          <p><input className="sign-up-avatar" type="file" name="avatar" accept="image/png, image/jpeg, image/jpg" value={inputFileValueRegistration} onChange={onChangeInputFileRegistration} /></p>
           <button type="submit" onClick={onClickSignUp}>Sign up</button>
+        </form>
       </div>
     )
   }

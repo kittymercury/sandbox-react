@@ -23,11 +23,13 @@ export default class App extends React.Component {
     super(props);
 
     this.state = {
-      currentUser: '',
-      currentPage: 'Authentication',
+      currentUser: 7,
+      currentPage: 'Contacts',
       currentChat: '',
       userProfile: '',
       chatInput: '',
+      showOk: 'hidden',
+      showSend: '',
       theme: 'light',
       changeNameInput: '',
       avatarChangeInput: '',
@@ -37,6 +39,8 @@ export default class App extends React.Component {
       passwordInputValueRegistration: '',
       nameInputValueRegistration: '',
       avatarInputValueRegistration: '',
+      messageToReply: null,
+      messageToForward: null,
 
       users: [
         { id: 1, name: 'Cut Corners', status: 'online', contactNumber: '+380996661488', avatar: cornersImg, login: '1', password: '1' },
@@ -53,6 +57,7 @@ export default class App extends React.Component {
       messages: [
         { id: 1, userId: 1, chatId: 1, time: '00:00', content: 'I love you <3' },
         { id: 2, userId: 7, chatId: 1, time: '00:01', content: 'I love you too <3' },
+        { id: 7, userId: 7, chatId: 1, time: '00:01', content: 'I want you <3' },
         { id: 3, userId: 6, chatId: 2, time: '07:40', content: 'Віта, в тебе є черешні?' },
         { id: 4, userId: 7, chatId: 2, time: '12:10', content: 'нажаль уже немає' },
         { id: 5, userId: 3, chatId: 3, time: '11:00', content: 'I know that you are the one who knocks and always make' },
@@ -154,41 +159,6 @@ export default class App extends React.Component {
 
   // ----------------------------------------------------
 
-  // handlers for Messages
-
-  handleChangeChatInput = (e) => {
-    this.setState({ chatInput: e.target.value });
-  }
-
-  handleClickSendButton = (e) => {
-    const currentChat = this.state.currentChat;
-    const currentUser = this.state.currentUser;
-    const messages = this.state.messages;
-    const chatInput = this.state.chatInput;
-
-    const newMessage = {
-      id: +new Date(),
-      userId: currentUser,
-      chatId: currentChat.id,
-      time: new Date().toLocaleTimeString(),
-      content: chatInput
-    }
-
-    const newMessages = messages.concat(newMessage);
-
-    this.setState({ messages: newMessages, chatInput: '' })
-  }
-
-  handleClickDeleteMessage = (messageItem) => {
-    const messages = this.state.messages;
-    const currentChat = this.state.currentChat;
-
-    const filteredMessages = messages.filter((message) => message !== messageItem);
-
-    this.setState({ messages: filteredMessages })
-  }
-
-  // -------------------------------------------------------
 
   // handlers for Settings
 
@@ -352,6 +322,83 @@ export default class App extends React.Component {
 
   // ------------------------------------------------
 
+  // handlers for Messages
+
+  handleChangeChatInput = (e) => {
+    this.setState({ chatInput: e.target.value });
+  }
+
+  handleClickSendButton = (e) => {
+    const currentChat = this.state.currentChat;
+    const currentUser = this.state.currentUser;
+    const messages = this.state.messages;
+    const chatInput = this.state.chatInput;
+
+    const newMessage = {
+      id: +new Date(),
+      userId: currentUser,
+      chatId: currentChat.id,
+      time: new Date().toLocaleTimeString(),
+      content: chatInput,
+      reply: this.state.messageToReply,
+      forward: this.state.massageToForward
+    }
+
+
+    const newMessages = messages.concat(newMessage);
+
+    this.setState({ messages: newMessages, chatInput: '', messageToReply: '' })
+  }
+
+  handleClickDeleteMessage = (messageItem) => {
+    const messages = this.state.messages;
+    const currentChat = this.state.currentChat;
+
+    const filteredMessages = messages.filter((message) => message !== messageItem);
+
+    this.setState({ messages: filteredMessages })
+  }
+
+  handleClickReply = (messageItem) => {
+    this.setState({ messageToReply: messageItem })
+  }
+
+  handleClickShare = (messageItem) => {
+    this.setState({ messageToForward: messageItem, currentPage: 'Chats' })
+  }
+
+  handleClickEditMessage = (messageItem) => {
+    const messages = this.state.messages;
+    const inputEditMessage = this.state.inputEditMessage;
+    const clickedMessage = messages.find((message) => message === messageItem);
+
+    this.setState({ chatInput: clickedMessage.content, showSend: 'hidden', showOk: ''})
+  }
+
+  handleClickEditButtonOk = (e) => {
+    // const currentChat = this.state.currentChat;
+    // const currentUser = this.state.currentUser;
+    // const messages = this.state.messages;
+    // const chatInput = this.state.chatInput;
+    // const currentMessage = messages.filter((message) => message.userId === currentUser).find((message) => message.content === chatInput);
+    //
+    // const editedMessage = {
+    //   id: currentMessage.id,
+    //   userId: currentUser,
+    //   chatId: currentChat.id,
+    //   time: currentMessage.time,
+    //   content: chatInput
+    // }
+    //
+    // const indexOfCurrentMessage = messages.indexOf(currentMessage);
+    //
+    // const newMessages = messages.splice(indexOfCurrentMessage, 1, editedMessage);
+    //
+    // this.setState({ messages: newMessages, chatInput: '' })
+  }
+
+
+  // -------------------------------------------------------
   render() {
     const currentUser = this.state.currentUser;
     const currentPage = this.state.currentPage;
@@ -366,6 +413,10 @@ export default class App extends React.Component {
     const loginInputValueRegistration = this.state.loginInputValueRegistration;
     const passwordInputValueRegistration = this.state.passwordInputValueRegistration;
     const nameInputValueRegistration = this.state.nameInputValueRegistration;
+    const showOk = this.state.showOk;
+    const showSend = this.state.showSend;
+    const onClickEditButtonOk = this.state.onClickEditButtonOk;
+    const messageToReply = this.state.messageToReply;
 
     const users = this.state.users;
     const chats = this.state.chats;
@@ -400,7 +451,23 @@ export default class App extends React.Component {
         )}
 
         {(currentPage === 'Messages') && (
-          <Messages messages={messages} users={users} currentChat={currentChat} currentUser={currentUser} onDelete={this.handleClickDeleteMessage} onChange={this.handleChangeChatInput} chatInput={chatInput} onSendClick={this.handleClickSendButton} />
+          <Messages
+            messages={messages}
+            users={users}
+            currentChat={currentChat}
+            currentUser={currentUser}
+            onDelete={this.handleClickDeleteMessage}
+            onChange={this.handleChangeChatInput}
+            chatInput={chatInput}
+            onSendClick={this.handleClickSendButton}
+            onClickReply={this.handleClickReply}
+            onClickShare={this.handleClickShare}
+            onClickEditMessage={this.handleClickEditMessage}
+            showOk={showOk}
+            showSend={showSend}
+            onClickEditButtonOk={this.handleClickEditButtonOk}
+            messageToReply={messageToReply}
+          />
         )}
 
         {(currentPage === 'Themes') && (
@@ -410,9 +477,10 @@ export default class App extends React.Component {
         {(currentPage === 'Edit profile') && (
           <SettingsEdit changeNameInput={changeNameInput} users={users} currentUser={currentUser} onChangeName={this.handleChangeName} onClickSubmitNewName={this.handleClickChangeName} onClickRemoveAvatar={this.handleClickRemoveAvatar} onChangeInputFile={this.handleChangeAvatarInput} onClickSubmitNewAvatar={this.handleClickChangeAvatarSubmitButton} />
         )}
-      {(![ 'Authentication', 'Registration' ].includes(currentPage)) && (
-        <Footer onClick={this.handleClickButtonFooter} />
-      )}
+
+        {(![ 'Authentication', 'Registration' ].includes(currentPage)) && (
+          <Footer onClick={this.handleClickButtonFooter} />
+        )}
     </div>
     );
   }

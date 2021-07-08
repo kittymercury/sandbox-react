@@ -9,218 +9,66 @@ ul {
   list-style: none;
 }
 
+.authentication-headline {
+  text-align: center;
+  margin: 10px;
+  font-weight: 600;
+}
+
+form {
+  text-align: center;
+}
+
+ form p input {
+  padding: 4px 15px 4px 3px;
+}
+
+form button {
+  padding: 5px 20px;
+}
+
+form div {
+  font-size: 13px;
+  margin: 10px;
+}
+
+form button:last-child {
+  padding: 5px 16px;
+}
+
+.content.registration .sign-up-avatar {
+  margin-left: 82px;
+}
+
+.content.registration form div {
+  font-size: 18px;
+  margin: 10px;
+  font-weight: 600;
+}
+
 .features {
   margin-top: 8px;
 }
 
 .features > li {
-  padding: 2px;
-  text-align: center;
+  padding: 8px;
   border-bottom: 2px solid gray;
-  display: block;
-  position: relative;
+  text-align: center
 }
 
-.sub-menu {
-  display: none;
-  position: absolute;
-  z-index: 1;
-}
-
-.sub-menu > li {
-  display: block;
-  align-items: center;
-  padding: 3px;
-  border-bottom: 1px solid gray;
-}
-
-.features > li:hover {
-  display: block;
-}
-
-/* light theme */
-
-.chat.light {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background-color: #c9f0f7;
-  color: black;
-  font-family: sans-serif;
-  font-size: 18px;
-}
-
-.light .contacts li span.offline {
-  font-size: 12px;
-  color: #999;
-}
-
-.light .contacts li span.online {
-  font-size: 12px;
-  color: green;
-}
-
-.light .user-status.offline {
-  font-size: 12px;
-  color: #999;
-}
-
-.light .user-status.online {
-  font-size: 12px;
-  color: green;
-}
-
-.light .message-time {
-  color: #715656;
-  font-size: 12px;
-}
-
-.light .you {
-  font-size: 12px;
-  color: #776868;
-}
-
-.light .my-status {
-  margin-top: 5px;
-  font-size: 14px;
-  color: green;
-  border-bottom: 1px solid black;
-}
-
-.light .sub-menu li:hover {
-  color: green;
-}
-
-.light .features li div:hover {
-  color: green;
-}
-
-.light .sub-menu {
-  display: block;
-  min-width: 100%;
-}
-
-.light li .sub-menu li:hover {
-  color: green;
-}
-
-.light .contacts li,
-.light .chats li,
-.light .messages li {
-  padding: 10px;
-  border-bottom: 1px solid black;
-  cursor: pointer;
-}
-
-.light .content {
-  flex: 1;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-}
-
-.light .chat-with-user {
-  position: absolute;
-  top: 180px;
-  left: 32px;
-  border: 1px solid #b4e2e2;
-  padding: 16px;
-  border-radius: 35px;
-  background-color: #b2e1f3;
-  cursor: pointer;
-}
-
-/* ---------------- */
-
-/* dark theme */
-
-.chat.dark {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background-color: #3a4042;
-  color: white;
-  font-family: sans-serif;
-  font-size: 18px;
-}
-
-.dark .contacts li span.offline {
-  font-size: 12px;
-  color: #ccc;
-}
-
-.dark .user-status.offline {
-  font-size: 12px;
-  color: #ccc;
-}
-
-.dark .contacts li span.online {
-  font-size: 12px;
-  color: #51ff51;
-}
-
-.dark .user-status.online {
-  font-size: 12px;
-  color: #51ff51;
-}
-
-.dark .you {
-  font-size: 12px;
-  color: #51ff51;
-  display: flex;
-}
-
-.dark .message-time {
-  color: #62b574;
-  font-size: 12px;
-}
-
-.dark .my-status {
-  margin-top: 5px;
-  font-size: 14px;
-  color: #51ff51;
-  border-bottom: 1px solid gray;
-}
-
-.dark .sub-menu {
-  display: block;
-  background-color: #3a4042;
-  min-width: 100%;
-}
-
-.dark li:hover {
-  color: #51ff51;
-}
-
-.dark .sub-menu li:hover {
-  color: #51ff51;
-}
-
-.dark .contacts li,
-.dark .chats li,
-.dark .messages li {
+.theme-menu > li {
   padding: 10px;
   border-bottom: 1px solid gray;
-  cursor: pointer;
 }
 
-.dark .content {
-  flex: 1;
+.theme-menu li:first-child {
   border-top: 1px solid gray;
-  border-bottom: 1px solid gray;
 }
 
-.dark .chat-with-user {
-  position: absolute;
-  top: 180px;
-  left: 32px;
-  border: 1px solid #668484;
-  padding: 16px;
-  border-radius: 35px;
-  color: white;
-  background-color: #3a4048;
-  cursor: pointer;
+.content.settings-themes h5 {
+  margin-left: 10px;
+  font-size: 18px;
 }
-/* ---------------- */
 
 .pointer {
   cursor: pointer;
@@ -231,6 +79,8 @@ ul {
   text-align: center;
   display: flex;
   justify-content: space-between;
+  font-size: 20px;
+  font-weight: 900;
 }
 
 .footer {
@@ -258,10 +108,25 @@ ul {
   justify-content: space-between;
 }
 
-.messages li {
+.messages li .message,
+.messages li .message-reply {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.message-reply {
+  font-size: 12px;
+  border-left: 2px solid black;
+  padding-left: 5px;
+  color: black;
+}
+
+.reply-to {
+  padding: 8px 10px 10px 5px;
+  font-size: 13px;
+  border-left: 2px solid black;
+  margin: 5px;
 }
 
 .delete:hover {
@@ -320,3 +185,227 @@ ul {
   font-size: 15px;
   font-weight: lighter;
 }
+
+.content.contacts li .user-name {
+  padding: 20px 300px 20px 0px
+}
+
+.edit-user-info {
+  float: right;
+  margin: -5px 15px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+ .reply-share {
+  font-size: 10px;
+  color: gray;
+  margin: 30px 0px 0px;
+}
+
+.reply-share span {
+  margin-right: 20px;
+}
+
+.reply-share span:hover {
+  color: black;
+  font-size: 11px;
+  transition-duration: 0.5s;
+}
+
+.hidden {
+  display: none;
+}
+
+.header div {
+  flex: 3;
+}
+
+
+/* ---------------------------------- light theme --------------------------- */
+
+.chat.light {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #482332;
+  color: white;
+  font-family: sans-serif;
+  font-size: 18px;
+}
+
+.chat.light .header {
+  background-color: #270e1d;
+}
+
+.light .contacts li span.offline {
+  font-size: 12px;
+  color: #ef5050;
+}
+
+.light .contacts li span.online {
+  font-size: 12px;
+  color: #3b9220;
+}
+
+.light .user-status.offline {
+  font-size: 12px;
+  color: #999;
+}
+
+.light .user-status.online {
+  font-size: 12px;
+  color: green;
+}
+
+.light .message-time {
+  color: #715656;
+  font-size: 12px;
+}
+
+.light .you {
+  font-size: 12px;
+  color: #776868;
+}
+
+.light .my-status {
+  margin-top: 5px;
+  font-size: 14px;
+  color: green;
+  border-bottom: 1px solid black;
+}
+
+.light .theme-menu li:hover {
+  color: green;
+}
+
+.light .features li div:hover {
+  color: green;
+}
+
+.light .theme-menu {
+  display: block;
+  min-width: 100%;
+}
+
+.light li .theme-menu li:hover {
+  color: green;
+}
+
+.light .contacts li,
+.light .chats li,
+.light .messages li {
+  padding: 10px;
+  border-bottom: 1px solid white;
+  cursor: pointer;
+}
+
+.light .content {
+  flex: 1;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.light .chat-with-user {
+  position: absolute;
+  top: 180px;
+  left: 32px;
+  border: 1px solid #b4e2e2;
+  padding: 16px;
+  border-radius: 35px;
+  background-color: #b2e1f3;
+  cursor: pointer;
+}
+
+/* ---------------------------------------------------------------- */
+
+/* -------------------------------- dark theme ----------------------- */
+
+.chat.dark {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #3a4042;
+  color: white;
+  font-family: sans-serif;
+  font-size: 18px;
+}
+
+.dark .contacts li span.offline {
+  font-size: 12px;
+  color: #ccc;
+}
+
+.dark .user-status.offline {
+  font-size: 12px;
+  color: #ccc;
+}
+
+.dark .contacts li span.online {
+  font-size: 12px;
+  color: #51ff51;
+}
+
+.dark .user-status.online {
+  font-size: 12px;
+  color: #51ff51;
+}
+
+.dark .you {
+  font-size: 12px;
+  color: #51ff51;
+  display: flex;
+}
+
+.dark .message-time {
+  color: #62b574;
+  font-size: 12px;
+}
+
+.dark .my-status {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #51ff51;
+  border-bottom: 1px solid gray;
+}
+
+.dark .theme-menu {
+  display: block;
+  background-color: #3a4042;
+  min-width: 100%;
+}
+
+.dark li:hover {
+  color: #51ff51;
+}
+
+.dark .theme-menu li:hover {
+  color: #51ff51;
+}
+
+.dark .contacts li,
+.dark .chats li,
+.dark .messages li {
+  padding: 10px;
+  border-bottom: 1px solid gray;
+  cursor: pointer;
+}
+
+.dark .content {
+  flex: 1;
+  border-top: 1px solid gray;
+  border-bottom: 1px solid gray;
+}
+
+.dark .chat-with-user {
+  position: absolute;
+  top: 180px;
+  left: 32px;
+  border: 1px solid #668484;
+  padding: 16px;
+  border-radius: 35px;
+  color: white;
+  background-color: #3a4048;
+  cursor: pointer;
+}
+/* ------------------------------------------------------------------- */

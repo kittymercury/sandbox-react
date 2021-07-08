@@ -8,7 +8,7 @@ export default class SettingsThemes extends React.Component {
     return (
       <div className="content settings-themes">
         <h5>Change theme</h5>
-        <ul className="sub-menu">
+        <ul className="theme-menu">
           <li onClick={onClickLightTheme}>Light</li>
           <li onClick={onClickDarkTheme}>Dark</li>
         </ul>

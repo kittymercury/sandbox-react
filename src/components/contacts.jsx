@@ -13,8 +13,7 @@ export default class Contacts extends React.Component {
               return (
                 <li>
                   <img className="avatar" src={user.avatar} onClick={onClickAvatar} />
-                  <span onClick={onClickUserName}> {user.name}</span>
-                  <span className={user.status}> {user.status}</span>
+                  <span className="user-name" onClick={onClickUserName}> {user.name} <span className={user.status}> {user.status}</span></span>
                 </li>
               )
             })}
