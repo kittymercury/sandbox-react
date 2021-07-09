@@ -11,7 +11,7 @@ export default class Contacts extends React.Component {
               const onClickUserName = () => this.props.onClickUserName(user);
               const onClickAvatar = () => this.props.onClickAvatar(user);
               return (
-                <li>
+                <li key={user.id}>
                   <img className="avatar" src={user.avatar} onClick={onClickAvatar} />
                   <span className="user-name" onClick={onClickUserName}> {user.name} <span className={user.status}> {user.status}</span></span>
                 </li>

@@ -1,20 +1,97 @@
 import React from 'react';
 
 export default class Messages extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      inputMessage: '',
+      messageToEdit: null,
+      messageToReply: null,
+      messages: props.messages || [
+        { id: 1, userId: 1, chatId: 1, time: '00:00', content: 'I love you <3' },
+        { id: 2, userId: 7, chatId: 1, time: '00:01', content: 'I love you too <3' },
+        { id: 7, userId: 7, chatId: 1, time: '00:01', content: 'I want you <3' },
+        { id: 3, userId: 6, chatId: 2, time: '07:40', content: 'Віта, в тебе є черешні?' },
+        { id: 4, userId: 7, chatId: 2, time: '12:10', content: 'нажаль уже немає' },
+        { id: 5, userId: 3, chatId: 3, time: '11:00', content: 'I know that you are the one who knocks and always make' },
+        { id: 6, userId: 7, chatId: 3, time: '13:04', content: 'You are goddamn right' },
+      ]
+    };
+  }
+
+  handleClickDeleteMessage = (message) => {
+    const newMessages = this.state.messages.filter((m) => m.id !== message.id);
+    this.setState({ messages: newMessages })
+  }
+
+  handleClickReply = (message) => {
+    this.setState({ messageToReply: message })
+  }
+
+  handleClickShare = (message) => {
+    this.props.changePage('Chats', { messageToForward: message, messages: this.state.messages });
+  }
+
+  handleClickEditMessage = (message) => {
+    this.setState({ messageToEdit: message, inputMessage: message.content });
+  }
+
+  handleChangeInputMessage = (e) => {
+    this.setState({ inputMessage: e.target.value });
+  }
+
+  handleClickButtonSend = () => {
+    const currentChat = this.props.currentChat;
+    const currentUser = this.props.currentUser;
+    const messages = this.state.messages;
+    const inputMessage = this.state.inputMessage;
+    const messageToReply = this.state.messageToReply;
+
+    const newMessage = {
+      id: +new Date(),
+      userId: currentUser,
+      chatId: currentChat.id,
+      time: new Date().toLocaleTimeString(),
+      content: inputMessage,
+      reply: messageToReply,
+    };
+
+    const newMessages = messages.concat(newMessage);
+
+    this.setState({
+      messages: newMessages,
+      inputMessage: '',
+      messageToReply: null,
+    });
+  }
+
+  handleClickButtonEditOk = () => {
+    const inputMessage = this.state.inputMessage;
+    const messageToEdit = this.state.messageToEdit;
+
+    const newMessages = this.state.messages.map((m) => {
+      return (m.id === messageToEdit.id)
+        ? { ...m, content: inputMessage }
+        : m;
+    });
+
+    this.setState({
+      messages: newMessages,
+      inputMessage: '',
+      messageToEdit: null,
+    });
+  }
+
   render () {
-    const messages = this.props.messages;
     const users = this.props.users;
     const currentUser = this.props.currentUser;
     const currentChat = this.props.currentChat;
-    const chatInput = this.props.chatInput;
-    const showOk = this.props.showOk;
-    const showSend = this.props.showSend;
-    const onClick = this.props.onSendClick;
-    const onChange = this.props.onChange;
-    const onClickEditButtonOk = this.props.onClickEditButtonOk;
-    const messageToReply = this.props.messageToReply;
-    const messageToForward = this.props.messageToForward;
     const isEditMessages = this.props.isEditMessages;
+
+    const inputMessage = this.state.inputMessage;
+    const messageToReply = this.state.messageToReply;
+    const messages = this.state.messages;
 
     return (
       <div className="content messages">
@@ -24,13 +101,13 @@ export default class Messages extends React.Component {
             const isCurrentUsersMessage = message.userId === currentUser;
             const style = { textAlign: isCurrentUsersMessage ? 'right' : 'left' };
             const messageStyle = { flexDirection: isCurrentUsersMessage ? 'row-reverse' : 'row' };
-            const onDelete = () => this.props.onDelete(message);
-            const onClickReply = () => this.props.onClickReply(message);
-            const onClickShare = () => this.props.onClickShare(message);
-            const onClickEditMessage = () => this.props.onClickEditMessage(message);
+            const onDelete = () => this.handleClickDeleteMessage(message);
+            const onClickReply = () => this.handleClickReply(message);
+            const onClickShare = () => this.handleClickShare(message);
+            const onClickEditMessage = () => this.handleClickEditMessage(message);
 
             return (
-              <li>
+              <li key={message.id}>
                 {(message.reply) && (
                   <div className="message-reply">
                     <div style={messageStyle}>
@@ -62,7 +139,9 @@ export default class Messages extends React.Component {
                     <span onClick={onClickReply}>Reply </span>
                     <span onClick={onClickShare}> Forward</span>
                     <span onClick={onDelete}>Delete</span>
-                    {(isCurrentUsersMessage) && <span onClick={onClickEditMessage}>   Edit</span>}
+                    {(isCurrentUsersMessage && !message.forward) && (
+                      <span onClick={onClickEditMessage}>Edit</span>
+                    )}
                   </div>
                 )}
               </li>
@@ -72,15 +151,21 @@ export default class Messages extends React.Component {
         <div style={{ display: 'block' }}>
           {(messageToReply) && (
             <div className="reply-to">
-              <span class="iconify" data-icon="websymbol-reply" data-inline="false"></span><br/>
+              <span className="iconify" data-icon="websymbol-reply" data-inline="false"></span><br/>
               <span>{users.find((user) => user.id === messageToReply.userId).name} </span><br/>
               <span>{messageToReply.content}</span>
             </div>
           )}
           <div style={{ display: 'flex' }}>
-            <input style={{ flex: 1 }} placeholder="Type your message here" value={chatInput} onChange={onChange} />
-            <button className={showSend} onClick={onClick}>Send</button>
-            <button className={showOk} onClick={onClickEditButtonOk}>OK</button>
+            <input
+              style={{ flex: 1 }}
+              placeholder="Type your message here"
+              value={inputMessage}
+              onChange={this.handleChangeInputMessage}
+            />
+            {this.state.messageToEdit
+              ? <button onClick={this.handleClickButtonEditOk}>OK</button>
+              : <button onClick={this.handleClickButtonSend}>Send</button>}
           </div>
         </div>
       </div>

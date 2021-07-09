@@ -18,7 +18,7 @@ export default class Chats extends React.Component {
             const participant = users.find((user) => user.id === chat.participants.find((id) => id !== currentUser));
 
             return (
-              <li>
+              <li key={chat.id}>
                 <div className="name" onClick={onClick}>{participant.name}</div>
                 <div className="delete" onClick={onDelete}>X</div>
               </li>
