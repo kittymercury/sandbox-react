@@ -12,8 +12,9 @@ export default class Messages extends React.Component {
     const onClick = this.props.onSendClick;
     const onChange = this.props.onChange;
     const onClickEditButtonOk = this.props.onClickEditButtonOk;
-    const messageToReply = this.props.messageToReply
-    const messageToForward = this.props.messageToForward
+    const messageToReply = this.props.messageToReply;
+    const messageToForward = this.props.messageToForward;
+    const isEditMessages = this.props.isEditMessages;
 
     return (
       <div className="content messages">
@@ -38,29 +39,32 @@ export default class Messages extends React.Component {
                     </div>
                   </div>
                 )}
-                {(message.forward) && (
-                  <div className="message-forward">
-                    <div style={messageStyle}>
-                      <div>{users.find((user) => user.id === message.forward.userId).name}</div>
-                      <div>{message.forward.content}</div>
-                    </div>
-                  </div>
-                )}
+
                 <div className="message" style={messageStyle}>
-                  <div>
                     <div style={style}>
                       <span>{user.name}</span>
                       <span className="message-time"> {message.time}</span>
                     </div>
                     <div style={style}>{message.content}</div>
+                </div>
+
+                {(message.forward) && (
+                  <div className="message-forward">
+                    <div style={messageStyle}>
+                      <div>Forwarded from: {users.find((user) => user.id === message.forward.userId).name}</div>
+                      <div>{message.forward.content}</div>
+                    </div>
                   </div>
+                )}
+
+                {isEditMessages && (
                   <div className="reply-share">
                     <span onClick={onClickReply}>Reply </span>
                     <span onClick={onClickShare}> Forward</span>
+                    <span onClick={onDelete}>Delete</span>
                     {(isCurrentUsersMessage) && <span onClick={onClickEditMessage}>   Edit</span>}
                   </div>
-                  <div className="delete" onClick={onDelete}>X</div>
-                </div>
+                )}
               </li>
             )
           })}

@@ -110,9 +110,7 @@ form button:last-child {
 
 .messages li .message,
 .messages li .message-reply {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+
 }
 
 .message-reply {
@@ -129,8 +127,9 @@ form button:last-child {
   margin: 5px;
 }
 
-.delete:hover {
-  color: red;
+.message-forward {
+  text-align: right;
+  flex-direction: row-reverse;
 }
 
 .change-avatar > div > button {
@@ -200,7 +199,7 @@ form button:last-child {
  .reply-share {
   font-size: 10px;
   color: gray;
-  margin: 30px 0px 0px;
+  margin-top: 10px;
 }
 
 .reply-share span {
@@ -237,6 +236,7 @@ form button:last-child {
 .chat.light .header {
   background-color: #270e1d;
 }
+
 
 .light .contacts li span.offline {
   font-size: 12px;

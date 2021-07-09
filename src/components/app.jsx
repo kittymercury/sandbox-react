@@ -28,6 +28,7 @@ export default class App extends React.Component {
       currentChat: '',
       userProfile: '',
       chatInput: '',
+      isEditMessages: false,
       showOk: 'hidden',
       showSend: '',
       theme: 'light',
@@ -52,6 +53,8 @@ export default class App extends React.Component {
 
       chats: [
         { id: 1, participants: [ 7, 1 ] },
+        { id: 2, participants: [ 7, 6 ] },
+        { id: 3, participants: [ 7, 3 ] },
       ],
 
       messages: [
@@ -66,18 +69,14 @@ export default class App extends React.Component {
     };
   }
 
-  // handlers for Header
-
-  handleClickCreateNewChat = () => {
-    this.setState({ currentPage: 'Contacts' });
+  changePage = (page) => {
+    this.setState({ currentPage: page })
   }
 
-  // ----------------------------------------
+  // handlers for Header
 
-  // handlers for Footer
-
-  handleClickButtonFooter = (page) => {
-    this.setState({ currentPage: page })
+  handleClickEditMessages = (condition) => {
+    this.setState({ isEditMessages: condition })
   }
 
   // ---------------------------------------
@@ -106,7 +105,8 @@ export default class App extends React.Component {
 
     const newChats = chats.concat(newChat);
 
-    this.setState({ currentChat: newChat, currentPage: 'Messages', chats: newChats })
+    this.changePage('Messages');
+    this.setState({ currentChat: newChat, chats: newChats })
   }
 
   handleClickOpenContactInfo = (userContact) => {
@@ -115,7 +115,8 @@ export default class App extends React.Component {
     const currentPage = this.state.currentPage;
     const userProfile = this.state.userProfile;
 
-    this.setState({ userProfile: userClicked, currentPage: 'Contact info' })
+    this.changePage('Contact info');
+    this.setState({ userProfile: userClicked })
   }
 
   // -----------------------------------------
@@ -123,8 +124,10 @@ export default class App extends React.Component {
   // handlers for ContactInfo
 
   handleClickOpenChat = (chat) => {
+    this.changePage('Messages');
+
     if (chat) {
-      this.setState({ currentChat: chat, currentPage: 'Messages' })
+      this.setState({ currentChat: chat })
     } else {
       const userProfile = this.state.userProfile;
       const currentUser = this.state.currentUser;
@@ -134,10 +137,9 @@ export default class App extends React.Component {
         name: userProfile.name,
         participants: [ currentUser, userProfile.id ]
       }
-
       const newChats = chats.concat(newChat);
 
-      this.setState({ currentChat: newChat, currentPage: 'Messages', chats: newChats })
+      this.setState({ currentChat: newChat, chats: newChats })
     }
 
   }
@@ -146,8 +148,27 @@ export default class App extends React.Component {
 
   // handlers for Chats
 
-  handleClickChat = (chat) => {
-    this.setState({ currentChat: chat, currentPage: 'Messages' })
+  handleClickChat = (chatItem) => {
+    const messages = this.state.messages;
+    const chats = this.state.chats;
+    const messageToForward = this.state.messageToForward;
+    const chat = chats.find((chat) => chat.id === chatItem.id);
+    const currentUser = this.state.currentUser;
+
+    this.changePage('Messages');
+
+    if (messageToForward) {
+      const message = {
+        id: +new Date(),
+        userId: currentUser,
+        chatId: chat.id,
+        time: new Date().toLocaleTimeString(),
+        forward: messageToForward
+      }
+      return this.setState({ messages: messages.concat(message), currentChat: chatItem, messageToForward: '' })
+    } else {
+      return this.setState({ currentChat: chatItem })
+    }
   }
 
   handleClickDeleteChat = (chatItem) => {
@@ -162,20 +183,8 @@ export default class App extends React.Component {
 
   // handlers for Settings
 
-  handleClickThemes = () => {
-    this.setState({ currentPage: 'Themes' })
-  }
-
-  handleClickLightTheme = () => {
-    this.setState({ theme: 'light' })
-  }
-
-  handleClickDarkTheme = () => {
-    this.setState({ theme: 'dark' })
-  }
-
-  handleClickEditProfile = () => {
-    this.setState({ currentPage: 'Edit profile' })
+  handleClickTheme = (theme) => {
+    this.setState({ theme })
   }
 
   handleChangeName = (e) => {
@@ -267,16 +276,16 @@ export default class App extends React.Component {
       }
     });
     if (currentUser) {
-      this.setState({ currentUser: currentUser.id, currentPage: 'Chats', loginInputValueAuthentication: '', passwordInputValueAuthentication: '' })
+      this.changePage('Chats');
+      this.setState({
+        currentUser: currentUser.id,
+        loginInputValueAuthentication: '',
+        passwordInputValueAuthentication: ''
+      });
     } else {
       alert('Wrong credentials');
     }
   }
-
-  handleClickOpenRegistration = () => {
-    this.setState({ currentPage: 'Registration' })
-  }
-
 
   // ---------------------------------------------
 
@@ -317,7 +326,8 @@ export default class App extends React.Component {
 
     const newUsers = users.concat(newUser);
 
-    this.setState({ currentUser: newUser.id, users: newUsers, currentPage: 'Chats' })
+    this.changePage('Chats');
+    this.setState({ currentUser: newUser.id, users: newUsers })
   }
 
   // ------------------------------------------------
@@ -341,9 +351,7 @@ export default class App extends React.Component {
       time: new Date().toLocaleTimeString(),
       content: chatInput,
       reply: this.state.messageToReply,
-      forward: this.state.massageToForward
     }
-
 
     const newMessages = messages.concat(newMessage);
 
@@ -364,7 +372,8 @@ export default class App extends React.Component {
   }
 
   handleClickShare = (messageItem) => {
-    this.setState({ messageToForward: messageItem, currentPage: 'Chats' })
+    this.changePage('Chats');
+    this.setState({ messageToForward: messageItem });
   }
 
   handleClickEditMessage = (messageItem) => {
@@ -417,6 +426,7 @@ export default class App extends React.Component {
     const showSend = this.state.showSend;
     const onClickEditButtonOk = this.state.onClickEditButtonOk;
     const messageToReply = this.state.messageToReply;
+    const isEditMessages = this.state.isEditMessages;
 
     const users = this.state.users;
     const chats = this.state.chats;
@@ -424,30 +434,72 @@ export default class App extends React.Component {
 
     return (
       <div className={`chat ${theme}`}>
-        <Header currentPage={currentPage} onClick={this.handleClickCreateNewChat} />
+        <Header
+          currentPage={currentPage}
+          onClickCreateChat={() => this.changePage('Contacts')}
+          onClickEditMessages={this.handleClickEditMessages}
+          isEditMessages={isEditMessages}
+        />
 
         {(currentPage === 'Authentication') && (
-          <Authentication loginInputValueAuthentication={loginInputValueAuthentication} onChangeLoginAuthentication={this.handleChangeLoginAuthentication} passwordInputValueAuthentication={passwordInputValueAuthentication} onChangePasswordAuthentication={this.handleChangePasswordAuthentication} onClickLogIn={this.handleClickLogIn} onClickOpenRegistration={this.handleClickOpenRegistration} />
+          <Authentication
+            loginInputValueAuthentication={loginInputValueAuthentication}
+            onChangeLoginAuthentication={this.handleChangeLoginAuthentication}
+            passwordInputValueAuthentication={passwordInputValueAuthentication}
+            onChangePasswordAuthentication={this.handleChangePasswordAuthentication}
+            onClickLogIn={this.handleClickLogIn}
+            onClickOpenRegistration={() => this.changePage('Registration')}
+          />
         )}
 
         {(currentPage === 'Registration') && (
-          <Registration loginInputValueRegistration={loginInputValueRegistration} onChangeLoginRegistration={this.handleChangeLoginRegistration} passwordInputValueRegistration={passwordInputValueRegistration} onChangePasswordRegistration={this.handleChangePasswordRegistration} nameInputValueRegistration={nameInputValueRegistration} onChangeNameRegistration={this.handleChangeNameRegistration} avatarInputValueRegistration={avatarInputValueRegistration} onChangeInputFileRegistration={this.handleChangeInputFileRegistration} onClickSignUp={this.handleClickSignUp} />
+          <Registration
+            loginInputValueRegistration={loginInputValueRegistration}
+            onChangeLoginRegistration={this.handleChangeLoginRegistration}
+            passwordInputValueRegistration={passwordInputValueRegistration}
+            onChangePasswordRegistration={this.handleChangePasswordRegistration}
+            nameInputValueRegistration={nameInputValueRegistration}
+            onChangeNameRegistration={this.handleChangeNameRegistration}
+            avatarInputValueRegistration={avatarInputValueRegistration}
+            onChangeInputFileRegistration={this.handleChangeInputFileRegistration}
+            onClickSignUp={this.handleClickSignUp}
+          />
         )}
 
         {(currentPage === 'Contacts') && (
-          <Contacts onClickUserName={this.handleClickContact} onClickAvatar={this.handleClickOpenContactInfo} users={users} />
+          <Contacts
+            onClickUserName={this.handleClickContact}
+            onClickAvatar={this.handleClickOpenContactInfo}
+            users={users}
+          />
         )}
 
         {(currentPage === 'Contact info') && (
-          <ContactInfo users={users} userProfile={userProfile} onClickOpenChat={this.handleClickOpenChat} chats={chats} />
+          <ContactInfo
+            users={users}
+            userProfile={userProfile}
+            onClickOpenChat={this.handleClickOpenChat}
+            chats={chats}
+          />
         )}
 
         {(currentPage === 'Chats') && (
-          <Chats currentUser={currentUser} onClick={this.handleClickChat} onDelete={this.handleClickDeleteChat} users={users} chats={chats} />
+          <Chats
+            currentUser={currentUser}
+            onClick={this.handleClickChat}
+            onDelete={this.handleClickDeleteChat}
+            users={users}
+            chats={chats}
+          />
         )}
 
         {(currentPage === 'Settings') && (
-          <Settings users={users} currentUser={currentUser} onClickEditProfile={this.handleClickEditProfile} onClickThemes={this.handleClickThemes} />
+          <Settings
+            users={users}
+            currentUser={currentUser}
+            onClickEditProfile={() => this.changePage('Edit profile')}
+            onClickThemes={() => this.changePage('Themes')}
+          />
         )}
 
         {(currentPage === 'Messages') && (
@@ -467,19 +519,29 @@ export default class App extends React.Component {
             showSend={showSend}
             onClickEditButtonOk={this.handleClickEditButtonOk}
             messageToReply={messageToReply}
+            isEditMessages={isEditMessages}
           />
         )}
 
         {(currentPage === 'Themes') && (
-          <SettingsThemes onClickDarkTheme={this.handleClickDarkTheme} onClickLightTheme={this.handleClickLightTheme} />
+          <SettingsThemes onClick={this.handleClickTheme} />
         )}
 
         {(currentPage === 'Edit profile') && (
-          <SettingsEdit changeNameInput={changeNameInput} users={users} currentUser={currentUser} onChangeName={this.handleChangeName} onClickSubmitNewName={this.handleClickChangeName} onClickRemoveAvatar={this.handleClickRemoveAvatar} onChangeInputFile={this.handleChangeAvatarInput} onClickSubmitNewAvatar={this.handleClickChangeAvatarSubmitButton} />
+          <SettingsEdit
+            changeNameInput={changeNameInput}
+            users={users}
+            currentUser={currentUser}
+            onChangeName={this.handleChangeName}
+            onClickSubmitNewName={this.handleClickChangeName}
+            onClickRemoveAvatar={this.handleClickRemoveAvatar}
+            onChangeInputFile={this.handleChangeAvatarInput}
+            onClickSubmitNewAvatar={this.handleClickChangeAvatarSubmitButton}
+          />
         )}
 
         {(![ 'Authentication', 'Registration' ].includes(currentPage)) && (
-          <Footer onClick={this.handleClickButtonFooter} />
+          <Footer onButtonClick={(page) => this.changePage(page)} />
         )}
     </div>
     );
