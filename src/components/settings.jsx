@@ -1,21 +1,20 @@
 import React from 'react';
-
+import { getImg } from './helpers';
 
 export default class Settings extends React.Component {
   render () {
-    const users = this.props.users;
-    const currentUser = this.props.currentUser;
+    const user = this.props.user;
     const onClickEditProfile = this.props.onClickEditProfile;
     const onClickThemes = this.props.onClickThemes;
 
     return (
       <div className="content settings">
-        <span>{users.find((user) => user.id === currentUser).name}</span>
+        <span>{user.name}</span>
         <span className="you"> (you)</span>
         <div className="my-avatar">
-          <img className="my-avatar-image" src={users.find((user) => user.id === currentUser).avatar} />
+          <img className="my-avatar-image" src={getImg(user.avatar)} />
         </div>
-        <div className="my-status">{users.find((user) => user.id === currentUser).status}</div>
+        <div className="my-status">{user.status}</div>
         <ul className="features">
           <li>
             <div onClick={onClickThemes}>Themes</div>

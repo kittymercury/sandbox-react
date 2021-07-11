@@ -1,34 +1,64 @@
 import React from 'react';
 
+import noAvatar from './tg-imgs/no-avatar.png';
+
 export default class SettingsEdit extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: props.user.name,
+      avatar: props.user.avatar,
+    }
+  }
+
+  handleChangeName = (e) => {
+    this.setState({ name: e.target.value })
+  }
+
+  handleChangeAvatar = (e) => {
+    this.setState({ avatar: e.target.files[0].name })
+  }
+
+  handleClickChangeName = () => {
+    this.props.onSubmitUser({ name: this.state.name });
+  }
+
+  handleClickRemoveAvatar = () => {
+    this.props.onSubmitUser({ avatar: '' });
+  }
+
+  handleClickAvatarSubmit = () => {
+    this.props.onSubmitUser({ avatar: this.state.avatar });
+  }
+
   render () {
-    const changeNameInput = this.props.changeNameInput;
-    const users = this.props.users;
-    const currentUser = this.props.currentUser;
-    const onChangeName = this.props.onChangeName;
-    const onClickSubmitNewName = this.props.onClickSubmitNewName;
-
-    const onClickRemoveAvatar = this.props.onClickRemoveAvatar;
-    const onChangeInputFile = this.props.onChangeInputFile;
-    const onClickSubmitNewAvatar = this.props.onClickSubmitNewAvatar;
-
     return (
       <div className="edit-profile content">
         <div className="change-name">
           <h4>Change name</h4>
-          <input type="text" value={changeNameInput} placeholder={users.find((user) => user.id === currentUser).name} onChange={onChangeName} />
-          <button className="submit" onClick={onClickSubmitNewName}>Submit</button>
+          <input
+            type="text"
+            value={this.state.name}
+            onChange={this.handleChangeName}
+          />
+          <button className="submit" onClick={this.handleClickChangeName}>Submit</button>
         </div>
 
         <div className="change-avatar">
           <h4>Change avatar</h4>
           <div>
-            <button onClick={onClickRemoveAvatar}>Remove avatar</button>
+            <button onClick={this.handleClickRemoveAvatar}>Remove avatar</button>
           </div>
           <div>
-            <input type="file" name="avatar" accept="image/png, image/jpeg, image/jpg" onChange={onChangeInputFile}/>
+            <input
+              type="file"
+              name="avatar"
+              accept="image/png, image/jpeg, image/jpg"
+              onChange={this.handleChangeAvatar}
+            />
             <p>
-              <button onClick={onClickSubmitNewAvatar}>Submit</button>
+              <button onClick={this.handleClickAvatarSubmit}>Submit</button>
             </p>
           </div>
         </div>
