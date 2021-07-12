@@ -84,15 +84,31 @@ export default class Messages extends React.Component {
     });
   }
 
-  handleChangeSearchInput = (e) => {
-    this.setState({  })
+  handleChangeInputSearch = (e) => {
+    this.setState({ inputSearch: e.target.value  })
   }
 
   render () {
+    if (searchInput) {
+      this.state.chats.forEach((chat) => {
+        chat.participants.forEach((id) => {
+          const user = users.find((user) => {
+            return id === user.id;
+          })
+          if (user.userName.toLowerCase().includes(searchInput.toLowerCase())) {
+            chats.push(chat)
+          }
+        })
+      })
+    } else {
+      chats = this.state.chats;
+    }
+
     const users = this.props.users;
     const currentUser = this.props.currentUser;
     const currentChat = this.props.currentChat;
     const isEditMessages = this.props.isEditMessages;
+    const searchInput = this.props.searchInput;
 
     const inputMessage = this.state.inputMessage;
     const messageToReply = this.state.messageToReply;
@@ -100,7 +116,7 @@ export default class Messages extends React.Component {
 
     return (
       <div className="content messages">
-        <input className="search" type="text" placeholder="Search" value={this.handleChangeSearchInput} />
+        <input className="search" type="text" placeholder="Search" value={searchInput} onChange={this.handleChangeSearchInput} />
         <ul>
           {messages.filter((message) => message.chatId === currentChat.id).map((message) => {
             const user = users.find((user) => user.id === message.userId);
