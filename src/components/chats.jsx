@@ -5,14 +5,14 @@ export default class Chats extends React.Component {
     const chats = this.props.chats;
     const users = this.props.users;
     const currentUser = this.props.currentUser;
-    const filteredChats = chats.filter((chat) => {
+    const currentUsersChats = chats.filter((chat) => {
       return chat.participants.includes(currentUser);
     })
 
     return (
       <div className="content chats">
         <ul>
-          {filteredChats.map((chat) => {
+          {currentUsersChats.map((chat) => {
             const onClick = () => this.props.onClick(chat);
             const onDelete = () => this.props.onDelete(chat);
             const participant = users.find((user) => user.id === chat.participants.find((id) => id !== currentUser));

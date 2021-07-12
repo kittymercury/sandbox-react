@@ -220,6 +220,10 @@ form button:last-child {
   flex: 3;
 }
 
+.privacy-and-security div {
+  margin: 16px;
+}
+
 
 /* ---------------------------------- light theme --------------------------- */
 

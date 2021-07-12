@@ -2,7 +2,6 @@ import React from 'react';
 
 export default class Header extends React.Component {
   render () {
-    const theme = this.props.theme;
     const currentPage = this.props.currentPage;
     const onClickEditMessages = this.props.onClickEditMessages;
     const onClickCreateChat = this.props.onClickCreateChat;

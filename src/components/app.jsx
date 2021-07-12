@@ -11,6 +11,7 @@ import Messages from './messages';
 import Settings from './settings';
 import SettingsThemes from './settings-themes';
 import SettingsEdit from './settings-edit';
+import PrivacyAndSecurity from './privacy-and-security';
 
 import cornersImg from './tg-imgs/corners.jpeg';
 import jesseImg from './tg-imgs/jesse.jpg';
@@ -23,7 +24,7 @@ export default class App extends React.Component {
 
     this.state = {
       currentUser: 7,
-      currentPage: 'Contacts',
+      currentPage: 'Chats',
       currentPageState: {},
       currentChat: '',
       userProfile: '',
@@ -60,21 +61,21 @@ export default class App extends React.Component {
 
   // handlers for Contacts
 
-  handleClickContact = (userContact) => {
+  handleClickContact = (user) => {
     const currentUser = this.state.currentUser;
     const currentPage = this.state.currentPage;
     const currentChat = this.state.currentChat;
     const chats = this.state.chats;
     const users = this.state.users;
 
-    const userToChat = users.find((user) => user.id === userContact.id).id;
+    const userToChat = users.find((u) => u.id === user.id).id;
     const isChatExist = chats.find((chat) => chat.participants.includes(userToChat) === true);
     if (isChatExist) return;
 
     const newChat = {
       id: +new Date(),
-      name: userContact.name,
-      participants: [ currentUser, userContact.id ]
+      name: user.name,
+      participants: [ currentUser, user.id ]
     }
 
     const newChats = chats.concat(newChat);
@@ -83,11 +84,9 @@ export default class App extends React.Component {
     this.setState({ currentChat: newChat, chats: newChats })
   }
 
-  handleClickOpenContactInfo = (userContact) => {
+  handleClickOpenContactInfo = (user) => {
     const users = this.state.users;
-    const userClicked = users.find((user) => user.id === userContact.id);
-    const currentPage = this.state.currentPage;
-    const userProfile = this.state.userProfile;
+    const userClicked = users.find((u) => u.id === user.id);
 
     this.changePage('Contact info');
     this.setState({ userProfile: userClicked })
@@ -143,9 +142,9 @@ export default class App extends React.Component {
     }
   }
 
-  handleClickDeleteChat = (chatItem) => {
+  handleClickDeleteChat = (chat) => {
     const chats = this.state.chats;
-    const filteredChats = chats.filter((chat) => chat !== chatItem);
+    const filteredChats = chats.filter((c) => c !== chat);
 
     this.setState({ chats: filteredChats })
   }
@@ -153,13 +152,13 @@ export default class App extends React.Component {
   // ----------------------------------------------------
 
 
-  // handlers for Settings
+  //  Themes
 
   handleClickTheme = (theme) => {
     this.setState({ theme })
   }
 
-  // ---------------------------------------------------------
+  // Authentication
 
   handleClickLogIn = (state) => {
     const users = this.state.users;
@@ -198,6 +197,10 @@ export default class App extends React.Component {
     this.changePage('Chats');
     this.setState({ currentUser: newUser.id, users: newUsers })
   }
+
+  // -----------------------------------
+
+  // Registration
 
   handleSubmitUser = (user) => {
     const currentUser = this.state.currentUser;
@@ -283,6 +286,7 @@ export default class App extends React.Component {
             user={user}
             onClickEditProfile={() => this.changePage('Edit profile')}
             onClickThemes={() => this.changePage('Themes')}
+            onClickPrivacyAndSecurity={() => this.changePage('Privacy and security')}
           />
         )}
 
@@ -307,6 +311,9 @@ export default class App extends React.Component {
             onSubmitUser={this.handleSubmitUser}
           />
         )}
+
+        {(currentPage === 'Privacy and security') &&
+          <PrivacyAndSecurity />}
 
         {(![ 'Authentication', 'Registration' ].includes(currentPage)) && (
           <Footer onButtonClick={(page) => this.changePage(page)} />

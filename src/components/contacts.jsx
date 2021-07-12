@@ -14,8 +14,14 @@ export default class Contacts extends React.Component {
 
               return (
                 <li key={user.id}>
-                  <img className="avatar" src={getImg(user.avatar)} onClick={onClickAvatar} />
-                  <span className="user-name" onClick={onClickUserName}> {user.name} <span className={user.status}> {user.status}</span></span>
+                  <img className="avatar"
+                    src={getImg(user.avatar)}
+                    onClick={onClickAvatar}
+                  />
+                  <span className="user-name" onClick={onClickUserName}>
+                    {user.name}
+                    <span className={user.status}> {user.status}</span>
+                  </span>
                 </li>
               )
             })}

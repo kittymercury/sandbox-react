@@ -5,6 +5,7 @@ export default class Messages extends React.Component {
     super(props);
 
     this.state = {
+      inputSearch: '',
       inputMessage: '',
       messageToEdit: null,
       messageToReply: null,
@@ -83,6 +84,10 @@ export default class Messages extends React.Component {
     });
   }
 
+  handleChangeSearchInput = (e) => {
+    this.setState({  })
+  }
+
   render () {
     const users = this.props.users;
     const currentUser = this.props.currentUser;
@@ -95,6 +100,7 @@ export default class Messages extends React.Component {
 
     return (
       <div className="content messages">
+        <input className="search" type="text" placeholder="Search" value={this.handleChangeSearchInput} />
         <ul>
           {messages.filter((message) => message.chatId === currentChat.id).map((message) => {
             const user = users.find((user) => user.id === message.userId);

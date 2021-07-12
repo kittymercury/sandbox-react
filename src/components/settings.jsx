@@ -6,6 +6,7 @@ export default class Settings extends React.Component {
     const user = this.props.user;
     const onClickEditProfile = this.props.onClickEditProfile;
     const onClickThemes = this.props.onClickThemes;
+    const onClickPrivacyAndSecurity = this.props.onClickPrivacyAndSecurity;
 
     return (
       <div className="content settings">
@@ -23,7 +24,7 @@ export default class Settings extends React.Component {
             <div onClick={onClickEditProfile}>Edit profile</div>
           </li>
           <li>
-            <div>Confidentiality</div>
+            <div onClick={onClickPrivacyAndSecurity}>Privacy and security</div>
           </li>
         </ul>
       </div>
