@@ -24,12 +24,14 @@ export default class App extends React.Component {
 
     this.state = {
       currentUser: 7,
-      currentPage: 'Chats',
+      currentPage: 'Messages',
       currentPageState: {},
-      currentChat: '',
+      currentChat: { id: 1 },
       userProfile: '',
-      isEditMessages: false,
       theme: 'light',
+
+      isEditMessages: false,
+      isSearch: false,
 
       users: [
         { id: 1, name: 'Cut Corners', status: 'online', contactNumber: '+380996661488', avatar: 'corners.jpeg', login: '1', password: '1' },
@@ -48,7 +50,7 @@ export default class App extends React.Component {
   }
 
   changePage = (page, currentPageState = {}) => {
-    this.setState({ currentPage: page, currentPageState })
+    this.setState({ currentPage: page, currentPageState, isSearch: false })
   }
 
   // handlers for Header
@@ -57,6 +59,9 @@ export default class App extends React.Component {
     this.setState({ isEditMessages: condition })
   }
 
+  handleClickSearch = (condition) => {
+    this.setState({ isSearch: condition })
+  }
   // ---------------------------------------
 
   // handlers for Contacts
@@ -226,6 +231,7 @@ export default class App extends React.Component {
     const userProfile = this.state.userProfile;
     const theme = this.state.theme;
     const isEditMessages = this.state.isEditMessages;
+    const isSearch = this.state.isSearch;
 
     const users = this.state.users;
     const chats = this.state.chats;
@@ -238,7 +244,9 @@ export default class App extends React.Component {
           currentPage={currentPage}
           onClickCreateChat={() => this.changePage('Contacts')}
           onClickEditMessages={this.handleClickEditMessages}
+          onClickSearch={this.handleClickSearch}
           isEditMessages={isEditMessages}
+          isSearch={isSearch}
         />
 
         {(currentPage === 'Authentication') && (
@@ -276,6 +284,7 @@ export default class App extends React.Component {
             currentUser={currentUser}
             onClick={this.handleClickChat}
             onDelete={this.handleClickDeleteChat}
+            isSearch={isSearch}
             users={users}
             chats={chats}
           />
@@ -297,6 +306,7 @@ export default class App extends React.Component {
             currentChat={currentChat}
             currentUser={currentUser}
             isEditMessages={isEditMessages}
+            isSearch={isSearch}
             changePage={this.changePage}
           />
         )}
