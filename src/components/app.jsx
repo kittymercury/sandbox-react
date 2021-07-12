@@ -30,6 +30,7 @@ export default class App extends React.Component {
       userProfile: '',
       theme: 'light',
 
+      isStatusVisible: '',
       isEditMessages: false,
       isSearch: false,
 
@@ -98,31 +99,6 @@ export default class App extends React.Component {
   }
 
   // -----------------------------------------
-
-  // handlers for ContactInfo
-
-  handleClickOpenChat = (chat) => {
-    this.changePage('Messages');
-
-    if (chat) {
-      this.setState({ currentChat: chat })
-    } else {
-      const userProfile = this.state.userProfile;
-      const currentUser = this.state.currentUser;
-      const chats = this.state.chats;
-      const newChat = {
-        id: +new Date(),
-        name: userProfile.name,
-        participants: [ currentUser, userProfile.id ]
-      }
-      const newChats = chats.concat(newChat);
-
-      this.setState({ currentChat: newChat, chats: newChats })
-    }
-
-  }
-
-  // ---------------------------------------
 
   // handlers for Chats
 
@@ -224,14 +200,55 @@ export default class App extends React.Component {
 
   // -------------------------------------------------------
 
+  // ContactInfo
+
+  handleClickOpenChat = () => {
+    const chats = this.state.chats;
+    const userProfile = this.state.userProfile;
+    const chat = chats.find((chat) => chat.participants.includes(userProfile.id));
+
+    this.changePage('Messages');
+
+    if (chat) {
+      this.setState({ currentChat: chat })
+    } else {
+      const currentUser = this.state.currentUser;
+      const newChat = {
+        id: +new Date(),
+        name: userProfile.name,
+        participants: [ currentUser, userProfile.id ]
+      }
+      const newChats = chats.concat(newChat);
+
+      this.setState({ currentChat: newChat, chats: newChats })
+    }
+  };
+
+  // -------------
+
+  // Privacy and security
+
+  handleChangeInputCheckbox = () => {
+    if (input.checked === true) {
+      this.setState({ isStatusVisible: checked })
+      console.log(isStatusVisible)
+    } else {
+      isStatusVisible = this.state.isStatusVisible;
+    }
+  }
+
+  // ---------------------
+
   render() {
     const currentUser = this.state.currentUser;
     const currentPage = this.state.currentPage;
     const currentChat = this.state.currentChat;
     const userProfile = this.state.userProfile;
     const theme = this.state.theme;
+
     const isEditMessages = this.state.isEditMessages;
     const isSearch = this.state.isSearch;
+    const isStatusVisible = this.state.isStatusVisible;
 
     const users = this.state.users;
     const chats = this.state.chats;
@@ -272,10 +289,8 @@ export default class App extends React.Component {
 
         {(currentPage === 'Contact info') && (
           <ContactInfo
-            users={users}
-            userProfile={userProfile}
+            user={userProfile}
             onClickOpenChat={this.handleClickOpenChat}
-            chats={chats}
           />
         )}
 
@@ -323,7 +338,10 @@ export default class App extends React.Component {
         )}
 
         {(currentPage === 'Privacy and security') &&
-          <PrivacyAndSecurity />}
+          <PrivacyAndSecurity
+            onChangeShowStatus={this.handleChangeShowStatus}
+            isStatusVisible={isStatusVisible}
+          />}
 
         {(![ 'Authentication', 'Registration' ].includes(currentPage)) && (
           <Footer onButtonClick={(page) => this.changePage(page)} />

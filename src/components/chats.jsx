@@ -1,4 +1,5 @@
 import React from 'react';
+import InputSearch from './input-search';
 
 export default class Chats extends React.Component {
   constructor(props) {
@@ -39,10 +40,7 @@ export default class Chats extends React.Component {
     return (
       <div className="content chats">
         {isSearch && (
-          <input
-            className="search"
-            type="text"
-            placeholder="Search"
+          <InputSearch
             value={inputSearch}
             onChange={this.handleChangeInputSearch}
           />

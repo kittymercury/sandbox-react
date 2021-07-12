@@ -1,23 +1,32 @@
 import React from 'react';
 
 export default class Header extends React.Component {
-  render () {
+  renderButtonsLeft() {
     const currentPage = this.props.currentPage;
-    const onClickEditMessages = this.props.onClickEditMessages;
-    const onClickSearch = this.props.onClickSearch;
-    const onClickCreateChat = this.props.onClickCreateChat;
     const isEditMessages = this.props.isEditMessages;
-    const isSearch = this.props.isSearch;
+    const onClickCreateChat = this.props.onClickCreateChat;
 
     return (
-      <div className="header">
+      <div>
         {(currentPage === 'Messages')
           ? isEditMessages
             ? <button onClick={() => onClickEditMessages(false)}>Cancel</button>
             : <button onClick={() => onClickEditMessages(true)}>Edit</button>
           : ''}
-        <div>{currentPage}</div>
-        {(currentPage === 'Chats') && <button onClick={onClickCreateChat}>Create</button>}
+        {(currentPage === 'Chats') && (
+          <button onClick={onClickCreateChat}>Create</button>
+        )}
+      </div>
+    );
+  }
+
+  renderButtonsRight() {
+    const currentPage = this.props.currentPage;
+    const onClickSearch = this.props.onClickSearch;
+    const isSearch = this.props.isSearch;
+
+    return (
+      <div>
         {(currentPage === 'Messages')
           ? isSearch
             ? <button onClick={() => onClickSearch(false)}>Cancel</button>
@@ -28,6 +37,22 @@ export default class Header extends React.Component {
             ? <button onClick={() => onClickSearch(false)}>Cancel</button>
             : <button onClick={() => onClickSearch(true)}>Search</button>
           : ''}
+      </div>
+    );
+  }
+
+  renderTitle() {
+    return (
+      <div>{this.props.currentPage}</div>
+    );
+  }
+
+  render () {
+    return (
+      <div className="header">
+        {this.renderButtonsLeft()}
+        {this.renderTitle()}
+        {this.renderButtonsRight()}
       </div>
     )
   }
