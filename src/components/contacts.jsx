@@ -4,6 +4,8 @@ import { getImg } from './helpers';
 export default class Contacts extends React.Component {
   render () {
     const users = this.props.users;
+    const isStatusVisible = this.props.isStatusVisible;
+    console.log(isStatusVisible);
 
     return (
         <div className="content contacts">
@@ -20,7 +22,9 @@ export default class Contacts extends React.Component {
                   />
                   <span className="user-name" onClick={onClickUserName}>
                     {user.name}
-                    <span className={user.status}> {user.status}</span>
+                    {isStatusVisible && (
+                      <span className={user.status}> {user.status}</span>
+                    )}
                   </span>
                 </li>
               )

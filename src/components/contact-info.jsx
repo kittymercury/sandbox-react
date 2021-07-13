@@ -4,6 +4,7 @@ import { getImg } from './helpers';
 export default class ContactInfo extends React.Component {
   render () {
     const user = this.props.user;
+    const isStatusVisible = this.props.isStatusVisible;
     const onClickOpenChat = this.props.onClickOpenChat;
 
     return (
@@ -12,7 +13,11 @@ export default class ContactInfo extends React.Component {
           <span className="edit-user-info">Edit</span>
           <img className="user-avatar-image" src={getImg(user.avatar)} />
           <div className="user-name">{user.name}
-            <span className={`user-status ${user.status}`}> ({user.status})</span>
+            {isStatusVisible && (
+              <span className={`user-status ${user.status}`}>
+                ({user.status})
+              </span>
+            )}
             <div className="contact-number">{user.contactNumber}</div>
           </div>
           <p>

@@ -4,6 +4,7 @@ import { getImg } from './helpers';
 export default class Settings extends React.Component {
   render () {
     const user = this.props.user;
+    const isStatusVisible = this.props.isStatusVisible;
     const onClickEditProfile = this.props.onClickEditProfile;
     const onClickThemes = this.props.onClickThemes;
     const onClickPrivacyAndSecurity = this.props.onClickPrivacyAndSecurity;
@@ -15,7 +16,7 @@ export default class Settings extends React.Component {
         <div className="my-avatar">
           <img className="my-avatar-image" src={getImg(user.avatar)} />
         </div>
-        <div className="my-status">{user.status}</div>
+        {isStatusVisible && <div className="my-status">{user.status}</div>}
         <ul className="features">
           <li>
             <div onClick={onClickThemes}>Themes</div>

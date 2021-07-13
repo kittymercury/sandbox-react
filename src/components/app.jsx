@@ -24,13 +24,13 @@ export default class App extends React.Component {
 
     this.state = {
       currentUser: 7,
-      currentPage: 'Messages',
+      currentPage: 'Privacy and security',
       currentPageState: {},
-      currentChat: { id: 1 },
+      currentChat: '',
       userProfile: '',
       theme: 'light',
 
-      isStatusVisible: '',
+      isStatusVisible: true,
       isEditMessages: false,
       isSearch: false,
 
@@ -228,13 +228,8 @@ export default class App extends React.Component {
 
   // Privacy and security
 
-  handleChangeInputCheckbox = () => {
-    if (input.checked === true) {
-      this.setState({ isStatusVisible: checked })
-      console.log(isStatusVisible)
-    } else {
-      isStatusVisible = this.state.isStatusVisible;
-    }
+  handleChangeInputCheckbox = (condition) => {
+    this.setState({ isStatusVisible: condition  })
   }
 
   // ---------------------
@@ -284,6 +279,7 @@ export default class App extends React.Component {
             onClickUserName={this.handleClickContact}
             onClickAvatar={this.handleClickOpenContactInfo}
             users={users}
+            isStatusVisible={isStatusVisible}
           />
         )}
 
@@ -291,6 +287,7 @@ export default class App extends React.Component {
           <ContactInfo
             user={userProfile}
             onClickOpenChat={this.handleClickOpenChat}
+            isStatusVisible={isStatusVisible}
           />
         )}
 
@@ -308,6 +305,7 @@ export default class App extends React.Component {
         {(currentPage === 'Settings') && (
           <Settings
             user={user}
+            isStatusVisible={isStatusVisible}
             onClickEditProfile={() => this.changePage('Edit profile')}
             onClickThemes={() => this.changePage('Themes')}
             onClickPrivacyAndSecurity={() => this.changePage('Privacy and security')}
@@ -337,11 +335,13 @@ export default class App extends React.Component {
           />
         )}
 
-        {(currentPage === 'Privacy and security') &&
+        {(currentPage === 'Privacy and security') && (
           <PrivacyAndSecurity
-            onChangeShowStatus={this.handleChangeShowStatus}
+            onClickSubmit={() => this.changePage('Settings')}
+            onChangeStatus={this.handleChangeInputCheckbox}
             isStatusVisible={isStatusVisible}
-          />}
+          />
+        )}
 
         {(![ 'Authentication', 'Registration' ].includes(currentPage)) && (
           <Footer onButtonClick={(page) => this.changePage(page)} />

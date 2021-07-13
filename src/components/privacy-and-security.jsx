@@ -1,21 +1,24 @@
 import React from 'react';
 
 export default class PrivacyAndSecurity extends React.Component {
+
+  handleChangeInputCheckbox = (e) => {
+    this.props.onChangeStatus(e.target.checked);
+  }
+
   render () {
-    const onClick = this.props.onClickShowStatus;
-    const onChange = this.props.onChangeShowStatus;
+    const onClickSubmit = this.props.onClickSubmit;
     const isStatusVisible = this.props.isStatusVisible;
 
     return (
       <div className="content privacy-and-security">
-        <div>Don't show my status:
+        <div>Show my status:
           <input
             type="checkbox"
-            name="enabled"
-            onChange={onChange}
-            {isStatusVisible}
+            onChange={this.handleChangeInputCheckbox}
+            checked={isStatusVisible}
           />
-          <button onClick={onClick}>Submit</button>
+          <button onClick={onClickSubmit}>Submit</button>
         </div>
       </div>
     )
