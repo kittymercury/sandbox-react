@@ -26,8 +26,7 @@ export default class App extends React.Component {
   }
 
   handleButtonOkClick = () => {
-    const items = this.state.items;
-    const value = this.state.value;
+    const { items, value } = this.state;
 
     if (value && value.trim() && !items.includes(value)) {
       this.setState({
@@ -44,7 +43,7 @@ export default class App extends React.Component {
   }
 
   handleButtonDeleteClick = (content) => {
-    const items = this.state.items;
+    const { items } = this.state;
     const filteredItems = items.filter((item) => {
       return item !== content;
     });
@@ -56,10 +55,22 @@ export default class App extends React.Component {
     this.setState({ value: e.target.value })
   }
 
+  renderInput = (condition, value) => {
+    if (condition) {
+      return (
+        <InputWrapper
+            onClick={this.handleButtonOkClick}
+            onChange={this.handleInputValueChange}
+            value={value}
+          />
+      )
+    } else {
+      return <ButtonWrapper onClick={this.handleButtonAddClick}/>
+    }
+  }
+
   render() {
-    const isInputVisible = this.state.isInputVisible;
-    const items = this.state.items;
-    const value = this.state.value;
+    const { items, value, isInputVisible } = this.state;
 
     return (
       <div>
@@ -68,14 +79,7 @@ export default class App extends React.Component {
           items={items}
           onDelete={this.handleButtonDeleteClick}
         />
-        {isInputVisible
-        ? <InputWrapper
-            onClick={this.handleButtonOkClick}
-            onChange={this.handleInputValueChange}
-            value={value}
-          />
-        : <ButtonWrapper onClick={this.handleButtonAddClick}/>
-        }
+        {this.renderInput(isInputVisible, value)}
       </div>
     );
   }

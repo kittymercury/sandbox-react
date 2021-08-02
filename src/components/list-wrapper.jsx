@@ -3,9 +3,7 @@ import ListItem from './list-item';
 
 export default class ListWrapper extends React.Component {
   render () {
-    const items = this.props.items;
-    const onDelete = this.props.onDelete;
-    const content = this.props.content;
+    const { items, onDelete, content } = this.props;
 
     return (
       <div className="list-wrapper">
@@ -19,7 +17,6 @@ export default class ListWrapper extends React.Component {
               />
             )
           })}
-
         </ul>
       </div>
     )

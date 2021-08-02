@@ -2,9 +2,7 @@ import React from 'react';
 
 export default class InputWrapper extends React.Component {
   render () {
-    const onClick = this.props.onClick;
-    const onChange = this.props.onChange;
-    const value = this.props.value;
+    const { onClick, onChange, value } = this.props;
 
     return (
       <div className="input-wrapper">
