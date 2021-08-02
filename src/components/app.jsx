@@ -15,11 +15,11 @@ export default class App extends React.Component {
 
     switch (type) {
       case 'result':
-        if ((calculation === '0.1*0.2') || (calculation === '0.2*0.1')) {
-          return this.setState({ calculation: '0.02' })
-        } else {
-          return this.setState({ calculation: eval(calculation) });
-        }
+      const number = eval(calculation);
+      const result = parseFloat(number.toPrecision(12));
+
+        return this.setState({ calculation: `${result}` });
+
       case 'backspace':
         return this.setState({ calculation: calculation.slice(0, -1) });
 
@@ -29,7 +29,7 @@ export default class App extends React.Component {
         return this.setState({ calculation: calculation.slice(0, -1) + content });
       } else {
         const lastElement = calculation.split('-').join(',').split('+').join(',').split('*').join(',').split('/').join(',').split(',').reverse()[0];
-        if (!lastElement.includes('.') && calculation.endsWith('0')) {
+        if (!lastElement.includes('.') && (lastElement.split('')[0] === '0') && calculation.endsWith('0')) {
           return this.setState({ calculation })
         }
         return this.setState({ calculation: calculation + content });
