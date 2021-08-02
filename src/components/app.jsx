@@ -24,11 +24,16 @@ export default class App extends React.Component {
         return this.setState({ calculation: calculation.slice(0, -1) });
 
       case 'number':
-        if (calculation === '0') {
-          return this.setState({ calculation: '0' });
-        } else {
-          return this.setState({ calculation: calculation + content });
+
+      if (calculation === '0') {
+        return this.setState({ calculation: calculation.slice(0, -1) + content });
+      } else {
+        const lastElement = calculation.split('-').join(',').split('+').join(',').split('*').join(',').split('/').join(',').split(',').reverse()[0];
+        if (!lastElement.includes('.') && calculation.endsWith('0')) {
+          return this.setState({ calculation })
         }
+        return this.setState({ calculation: calculation + content });
+      }
 
       case 'operator':
         if (calculation) {
@@ -46,26 +51,16 @@ export default class App extends React.Component {
 
       case 'point':
         if (calculation) {
-          if (!calculation.endsWith('*') && !calculation.endsWith('/') && !calculation.endsWith('-') && !calculation.endsWith('+') && !calculation.endsWith('.')) {
+          const lastNumber = calculation.split('-').join(',').split('+').join(',').split('*').join(',').split('/').join(',').split(',').reverse()[0];
+
+          if (!calculation.endsWith('.') && !lastNumber.includes('.') && !calculation.endsWith('-') && !calculation.endsWith('+') && !calculation.endsWith('*') && !calculation.endsWith('/')) {
             return this.setState({ calculation: calculation + content });
           } else {
             return this.setState({ calculation: calculation });
           }
         } else {
-          this.setState({ calculation: '' });
+          return this.setState({ calculation: '' });
         }
-
-        const indexOfPoint = calculation.split('').reverse().indexOf('.');
-        const operators = ['+', '-', '/', '*'];
-        const operatorIndexes = operators.map((operator) => calculation.split('').reverse().indexOf(operator));
-        const lastOperatorIndex = operatorIndexes.sort().reverse()[0];
-        const lastElementInCalculation = calculation.split('-').join(',').split('+').join(',').split('*').join(',').split('/').join(',').split(',').reverse()[0];
-        if (lastOperatorIndex && (lastOperatorIndex < indexOfPoint) &&  !lastElementInCalculation.includes('.')) {
-          return this.setState({ calculation: calculation + content });
-        } else {
-          return this.setState({ calculation: calculation });
-        };
-
     }
   }
 
