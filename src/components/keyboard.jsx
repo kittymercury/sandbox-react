@@ -3,7 +3,7 @@ import Button from './button';
 
 export default class Keyboard extends React.Component {
   render () {
-    const onClick = this.props.onClick;
+    const { onClick } = this.props;
 
     return (
       <div className="keyboard">

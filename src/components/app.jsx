@@ -11,7 +11,7 @@ export default class App extends React.Component {
   }
 
   handleButtonClick = (content, type) => {
-    const calculation = this.state.calculation;
+    const { calculation } = this.state;
 
     switch (type) {
       case 'result':
@@ -70,7 +70,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const calculation = this.state.calculation;
+    const { calculation } = this.state;
     const isMobile =  typeof window.orientation !== undefined ? 'is-mobile' : '';
 
     return (
