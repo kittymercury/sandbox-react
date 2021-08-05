@@ -1,24 +1,28 @@
 import React from 'react';
-import Header from './header';
+
 import ListWrapper from './list-wrapper';
 import InputWrapper from './input-wrapper';
-import ButtonWrapper from './button-wrapper';
+import ButtonAdd from './button-add';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    const storedItems = localStorage.getItem('items').split(',');
+    const storedItems = JSON.parse(localStorage.getItem('items') || '[]');
     const items = storedItems.filter((item) => item);
 
     this.state = {
-      isInputVisible: false,
+      isInputVisible: true,
       items: items,
       value: ''
     }
   }
 
   componentDidUpdate = (items) => {
-    localStorage.setItem('items', this.state.items);
+    if (this.state.items.length) {
+      localStorage.setItem('items', JSON.stringify(this.state.items));
+    } else {
+      localStorage.removeItem('items');
+    }
   }
 
   handleButtonAddClick = () => {
@@ -65,7 +69,7 @@ export default class App extends React.Component {
           />
       )
     } else {
-      return <ButtonWrapper onClick={this.handleButtonAddClick}/>
+      return <ButtonAdd onClick={this.handleButtonAddClick}/>
     }
   }
 
@@ -73,8 +77,8 @@ export default class App extends React.Component {
     const { items, value, isInputVisible } = this.state;
 
     return (
-      <div>
-        <Header/>
+      <div className="easylist">
+        <div className="header">easyList</div>
         <ListWrapper
           items={items}
           onDelete={this.handleButtonDeleteClick}

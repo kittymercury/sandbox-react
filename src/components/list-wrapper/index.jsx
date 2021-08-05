@@ -1,5 +1,7 @@
 import React from 'react';
-import ListItem from './list-item';
+import './styles.css';
+
+import ListItem from '../list-item';
 
 export default class ListWrapper extends React.Component {
   render () {

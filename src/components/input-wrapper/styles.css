@@ -1,0 +1,28 @@
+.input-wrapper {
+  height: 10%;
+  width: 100%;
+  position: fixed;
+  bottom: 30px;
+
+  display: flex;
+}
+
+input[type="text"] {
+  font-size: x-large;
+  outline: none;
+}
+
+.button-ok {
+  display: inline-block;
+  margin: 0;
+  width: 20%;
+  background-color: #5aabaf;
+  justify-content: center;
+  color: white;
+  align-items: center;
+  display: flex;
+  border-radius: 5px;
+  font-size: large;
+  font-weight: bold;
+  cursor: pointer;
+}

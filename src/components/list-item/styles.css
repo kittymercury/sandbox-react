@@ -1,0 +1,15 @@
+li {
+  margin-bottom: 3px;
+  padding: 20px;
+  background-color: #dfdff33b;
+  font-size: x-large;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+li .delete {
+  cursor: pointer;
+  color: red;
+}
