@@ -11,7 +11,7 @@ export default class App extends React.Component {
     const items = storedItems.filter((item) => item);
 
     this.state = {
-      isInputVisible: true,
+      isInputVisible: false,
       items: items,
       value: ''
     }
