@@ -11,7 +11,7 @@ export default class App extends React.Component {
     const items = storedItems.filter((item) => item);
 
     this.state = {
-      isInputVisible: false,
+      isInputVisible: true,
       items: items,
       value: ''
     }
@@ -54,6 +54,15 @@ export default class App extends React.Component {
     }
   }
 
+  handlePressKey = (e) => {
+    if (e.keyCode === 13) {
+      this.handleClickSubmit();
+    }
+    if (e.keyCode === 27) {
+      this.handleClickCancel();
+    }
+  }
+
   handleButtonDeleteClick = (content) => {
     const { items } = this.state;
     const filteredItems = items.filter((item) => {
@@ -70,6 +79,7 @@ export default class App extends React.Component {
             onSubmit={this.handleClickSubmit}
             onCancel={this.handleClickCancel}
             onChange={this.handleChangeInput}
+            onKeyUp={this.handlePressKey}
             value={value}
           />
       )

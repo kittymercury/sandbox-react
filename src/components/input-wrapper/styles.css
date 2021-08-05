@@ -1,27 +1,32 @@
 .input-wrapper {
-  height: 10%;
   width: 100%;
   position: fixed;
-  bottom: 30px;
+  bottom: 15px;
 
   display: flex;
+  align-items: stretch;
 }
 
 input[type="text"] {
-  font-size: x-large;
+  line-height: 42px;
+  margin: 0 10px;
+  padding: 1px 20px;
   outline: none;
+  border: none;
+  background-color: #b76262;
+  color: white;
+  font-size: 16px;
+  border-radius: 2.5em;
+  flex: 1;
 }
 
-.button-ok {
-  display: inline-block;
-  margin: 0;
-  width: 20%;
-  background-color: #5aabaf;
-  justify-content: center;
+.input-wrapper button {
+  width: 44px;
+  margin-right: 10px;
+  border: none;
   color: white;
-  align-items: center;
-  display: flex;
-  border-radius: 5px;
+  background-color: #b76262;
+  border-radius: 50%;
   font-size: large;
   font-weight: bold;
   cursor: pointer;

@@ -22,11 +22,17 @@ export default class InputWrapper extends React.Component {
   }
 
   render () {
-    const { onChange, value } = this.props;
+    const { onChange, value, onKeyUp } = this.props;
 
     return (
       <div className="input-wrapper">
-        <input type="text" autoFocus onChange={onChange} value={value} />
+        <input
+          type="text"
+          autoFocus
+          onChange={onChange}
+          value={value}
+          onKeyUp={onKeyUp}
+        />
         {this.renderInputButton(value)}
       </div>
     )

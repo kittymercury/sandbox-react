@@ -38,27 +38,17 @@ body:before {
 
 .header {
   height: 70px;
-  background-color: #a25885a3;
+  width: 100%;
+  background-color: #b76262;
   color: white;
   font-size: 30px;
   font-weight: bold;
+  position: fixed;
 
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
-
-/* .button-add {
-  width: 3.5em;
-  height: 3.5em;
-  font-size: 15px;
-  border: none;
-  color: white;
-  background-color: #ef7e27b5;
-  border-radius: 50%;
-  box-shadow: 5px 1px 5px 3px #0605058a;
-} */
 
 .button-wrapper {
   position: fixed;
@@ -88,4 +78,27 @@ body:before {
   transition-duration: 0.5s;
   background-color: #ff5e00ad;
   color: #ffffffc9;
+}
+
+.delete {
+  margin-left: auto;
+  border: none;
+  background-color: #ffffff00;
+  color: #d0d0d0;
+}
+
+.delete:hover {
+  color: #ff3f3f;
+  transform: rotate(360deg);
+  transition-duration: 1s;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 7px;
+  background-color: #bb6f76a6;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #ff8c3a;
 }
