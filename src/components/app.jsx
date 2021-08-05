@@ -11,13 +11,13 @@ export default class App extends React.Component {
     const items = storedItems.filter((item) => item);
 
     this.state = {
-      isInputVisible: true,
+      isInputVisible: false,
       items: items,
       value: ''
     }
   }
 
-  componentDidUpdate = (items) => {
+  componentDidUpdate = () => {
     if (this.state.items.length) {
       localStorage.setItem('items', JSON.stringify(this.state.items));
     } else {
@@ -46,6 +46,8 @@ export default class App extends React.Component {
         value: '',
         items: items.concat(value)
       })
+      const list = document.querySelector(".list-wrapper");
+      list.scrollTop = list.scrollHeight + 70;
     } else {
       this.setState({
         isInputVisible: false,
@@ -63,7 +65,7 @@ export default class App extends React.Component {
     }
   }
 
-  handleButtonDeleteClick = (content) => {
+  handleClickDelete = (content) => {
     const { items } = this.state;
     const filteredItems = items.filter((item) => {
       return item !== content;
@@ -96,7 +98,7 @@ export default class App extends React.Component {
         <div className="header">easyList</div>
         <ListWrapper
           items={items}
-          onDelete={this.handleButtonDeleteClick}
+          onDelete={this.handleClickDelete}
         />
         {this.renderInput(isInputVisible, value)}
       </div>

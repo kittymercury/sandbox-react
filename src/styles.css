@@ -52,21 +52,21 @@ body:before {
 
 .button-wrapper {
   position: fixed;
-  bottom: 20px;
+  bottom: 6px;
   left: 50%;
   transform: translateX(-50%);
 }
 
 .button-add {
-  height: 20px;
-  width: 20px;
-  padding: 20px 20px;
+  height: 15px;
+  width: 15px;
+  padding: 16px 16px;
   border: none;
   color: white;
   background-color: #ef7e27b5;
   border-radius: 50%;
   box-shadow: 5px 1px 5px 3px #06050540;
-  font-size: 18px;
+  font-size: 17px;
   cursor: pointer;
 
   display: flex;
@@ -78,19 +78,6 @@ body:before {
   transition-duration: 0.5s;
   background-color: #ff5e00ad;
   color: #ffffffc9;
-}
-
-.delete {
-  margin-left: auto;
-  border: none;
-  background-color: #ffffff00;
-  color: #d0d0d0;
-}
-
-.delete:hover {
-  color: #ff3f3f;
-  transform: rotate(360deg);
-  transition-duration: 1s;
 }
 
 *::-webkit-scrollbar {
