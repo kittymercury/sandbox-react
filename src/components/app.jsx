@@ -25,11 +25,19 @@ export default class App extends React.Component {
     }
   }
 
-  handleButtonAddClick = () => {
+  handleChangeInput = (e) => {
+    this.setState({ value: e.target.value })
+  }
+
+  handleClickAdd = () => {
     this.setState({ isInputVisible: true });
   }
 
-  handleButtonOkClick = () => {
+  handleClickCancel = () => {
+    this.setState({ isInputVisible: false, value: '' });
+  }
+
+  handleClickSubmit = () => {
     const { items, value } = this.state;
 
     if (value && value.trim() && !items.includes(value)) {
@@ -55,21 +63,18 @@ export default class App extends React.Component {
     this.setState({ items: filteredItems })
   }
 
-  handleInputValueChange = (e) => {
-    this.setState({ value: e.target.value })
-  }
-
   renderInput = (condition, value) => {
     if (condition) {
       return (
         <InputWrapper
-            onClick={this.handleButtonOkClick}
-            onChange={this.handleInputValueChange}
+            onSubmit={this.handleClickSubmit}
+            onCancel={this.handleClickCancel}
+            onChange={this.handleChangeInput}
             value={value}
           />
       )
     } else {
-      return <ButtonAdd onClick={this.handleButtonAddClick}/>
+      return <ButtonAdd onClick={this.handleClickAdd}/>
     }
   }
 
