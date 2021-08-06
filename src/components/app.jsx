@@ -2,6 +2,9 @@ import React from 'react';
 import Display from './display';
 import Keyboard from './keyboard';
 
+// 1.case minus
+// 2.case percent
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -23,7 +26,7 @@ export default class App extends React.Component {
       case 'backspace':
         return this.setState({ calculation: calculation.slice(0, -1) });
 
-      case 'number':
+      case 'number' :
 
       if (calculation === '0') {
         return this.setState({ calculation: calculation.slice(0, -1) + content });
