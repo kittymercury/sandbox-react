@@ -3,6 +3,7 @@ li {
   padding: 20px;
   background-color: #dfdff33b;
   font-size: x-large;
+  color: white;
 
   display: flex;
   justify-content: space-between;
@@ -10,6 +11,7 @@ li {
 }
 
 li .delete {
+  font-size: 18px;
+  color: #f94e4e;
   cursor: pointer;
-  color: red;
 }

@@ -8,7 +8,9 @@ export default class ListItem extends React.Component {
 
     return (
       <li>{content}
-        <span className="delete" onClick={onDelete}>✖</span>
+        <span className="delete" onClick={onDelete}>
+          <i className="fas fa-times"></i>
+        </span>
       </li>
     )
   }

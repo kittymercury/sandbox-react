@@ -8,13 +8,13 @@ export default class InputWrapper extends React.Component {
 
     if (value) {
       return (
-        <button onClick={this.props.onSubmit}>
+        <button className="submit" onClick={this.props.onSubmit}>
           <i className="fas fa-check"></i>
         </button>
       )
     } else {
       return (
-        <button onClick={this.props.onCancel}>
+        <button className="cancel" onClick={this.props.onCancel}>
           <i className="fas fa-times"></i>
         </button>
       )
