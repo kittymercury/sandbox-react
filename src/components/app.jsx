@@ -3,7 +3,6 @@ import Display from './display';
 import Keyboard from './keyboard';
 
 // 1.case minus
-// 2.case percent
 
 export default class App extends React.Component {
   constructor(props) {
@@ -15,11 +14,12 @@ export default class App extends React.Component {
 
   handleButtonClick = (content, type) => {
     const { calculation } = this.state;
+    const lastNumber = calculation.split('-').join(',').split('+').join(',').split('*').join(',').split('/').join(',').split(',').reverse()[0];
 
     switch (type) {
       case 'result':
-      const number = eval(calculation);
-      const result = parseFloat(number.toPrecision(12));
+        const number = eval(calculation);
+        const result = parseFloat(number.toPrecision(12));
 
         return this.setState({ calculation: `${result}` });
 
@@ -28,15 +28,15 @@ export default class App extends React.Component {
 
       case 'number' :
 
-      if (calculation === '0') {
-        return this.setState({ calculation: calculation.slice(0, -1) + content });
-      } else {
-        const lastElement = calculation.split('-').join(',').split('+').join(',').split('*').join(',').split('/').join(',').split(',').reverse()[0];
-        if (!lastElement.includes('.') && (lastElement.split('')[0] === '0') && calculation.endsWith('0')) {
-          return this.setState({ calculation })
+        if (calculation === '0') {
+          return this.setState({ calculation: calculation.slice(0, -1) + content });
+        } else {
+          const lastNumber = calculation.split('-').join(',').split('+').join(',').split('*').join(',').split('/').join(',').split(',').reverse()[0];
+          if (!lastNumber.includes('.') && (lastNumber.split('')[0] === '0') && calculation.endsWith('0')) {
+            return this.setState({ calculation })
+          }
+          return this.setState({ calculation: calculation + content });
         }
-        return this.setState({ calculation: calculation + content });
-      }
 
       case 'operator':
         if (calculation) {
@@ -54,8 +54,6 @@ export default class App extends React.Component {
 
       case 'point':
         if (calculation) {
-          const lastNumber = calculation.split('-').join(',').split('+').join(',').split('*').join(',').split('/').join(',').split(',').reverse()[0];
-
           if (!calculation.endsWith('.') && !lastNumber.includes('.') && !calculation.endsWith('-') && !calculation.endsWith('+') && !calculation.endsWith('*') && !calculation.endsWith('/')) {
             return this.setState({ calculation: calculation + content });
           } else {
@@ -64,6 +62,13 @@ export default class App extends React.Component {
         } else {
           return this.setState({ calculation: '' });
         }
+
+      case 'toggle-sign':
+      if (calculation) {
+        const newValue = parseFloat(calculation) * -1;
+        this.setState({ calculation: String(newValue) });
+      }
+
     }
   }
 
@@ -74,7 +79,7 @@ export default class App extends React.Component {
     return (
       <div className={`calculator ${isMobile}`}>
         <Display calculation={calculation}/>
-        <Keyboard onClick={this.handleButtonClick}/>
+        <Keyboard onClick={this.handleButtonClick} calculation={calculation}/>
       </div>
     );
   }

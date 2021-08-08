@@ -2,15 +2,23 @@ import React from 'react';
 import Button from './button';
 
 export default class Keyboard extends React.Component {
+
+  renderButtonClear = (condition, onClick) => {
+    if (condition) {
+      return <Button content="C" type="clear" onClick={onClick} />
+    } else {
+      return <Button content="AC" type="clear" onClick={onClick} />
+    }
+  }
   render () {
-    const { onClick } = this.props;
+    const { onClick, calculation } = this.props;
 
     return (
       <div className="keyboard">
         <div className="keyboard-line">
-          <Button content="C" type="clear" onClick={onClick} />
-          <Button content="%" type="percent" onClick={onClick} />
+          {this.renderButtonClear(calculation, onClick)}
           <Button content="←" type="backspace" onClick={onClick} />
+          <Button content="+/-" type="toggle-sign" onClick={onClick} />
           <Button content="+" type="operator" onClick={onClick} />
         </div>
 

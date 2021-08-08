@@ -5,7 +5,9 @@ html, body, #app, .calculator {
 }
 
 body {
-  background-color: #160f27;
+  background-image:
+    radial-gradient(50% 30% ellipse at center top, #201e40 0%, rgba(0,0,0,0) 100%),
+    radial-gradient(60% 50% ellipse at center bottom, #261226 0%, #100a1c 100%);
   font-family: monospace;
 }
 
@@ -28,11 +30,11 @@ body {
   width: 100%;
   line-height: 100px;
   padding: 0 5% 0 5%;
-  background-color: #241125;
   color: #E18735;
   font-size: 50px;
-  overflow-x: ellipsis;
   overflow-y: hidden;
+  overflow-x: scroll;
+  white-space: nowrap;
   transition: all 0.3s;
 
   display: flex;
@@ -44,32 +46,27 @@ body {
   width: 100%;
   margin-bottom: 50px;
   padding: 0;
-  background: linear-gradient(180deg, rgba(184,91,173,0.7399334733893557) 0%, rgba(138,77,147,0.8379726890756303) 15%, rgba(143,82,158,0.8491771708683473) 29%, rgba(120,66,149,0.8015581232492998) 46%, rgba(83,55,121,0.7875525210084033) 67%, rgba(66,43,97,0.7931547619047619) 85%, rgba(44,31,79,0.8827906162464986) 100%);
 }
 
 .calculator.is-mobile .keyboard .keyboard-line {
   height: 80px;
   width: 100%;
-  border-top: 1px solid #6b6b6b4f;
+  border-top: 1px solid #7d7d7d47;
 
   display: flex;
   justify-content: center;
 }
 
 .keyboard-line:last-child {
-  border-bottom: 1px solid #6b6b6b4f;
-}
-
-.button {
-  border-right: 1px solid #6b6b6b4f;
+  border-bottom: 1px solid #7d7d7d47;
 }
 
 .keyboard-line .button:last-child {
   border: none;
 }
 
-.calculator.is-mobile .keyboard .keyboard-line:last-child .number {
-  flex: 2;
+.keyboard .keyboard-line:last-child .number {
+  flex: 2.01;
 }
 
 .button:active {
@@ -81,7 +78,9 @@ body {
   font-size: 25px;
   transition: all 0.3s;
   flex: 1;
-  color: white;
+  background: #211f42c2;
+  color: #6cacc5;
+  border-right: 1px solid #7d7d7d47;
 
   display: flex;
   align-items: center;
@@ -89,13 +88,19 @@ body {
 }
 
 .result, .operator {
-
+  background-color: #1d1a40;
 }
 
-.clear, .percent, .backspace {
-
+.clear, .backspace, .toggle-sign {
+  background-color: #2f2d484a
 }
 
-.number, .point {
+*::-webkit-scrollbar {
+  height: 5px;
+  background-color: #181429;
+}
 
+*::-webkit-scrollbar-thumb {
+  height: 5px;
+  background-color: #6cacc5;
 }
