@@ -5,9 +5,7 @@ html, body, #app, .calculator {
 }
 
 body {
-  background-image:
-    radial-gradient(50% 30% ellipse at center top, #201e40 0%, rgba(0,0,0,0) 100%),
-    radial-gradient(60% 50% ellipse at center bottom, #261226 0%, #100a1c 100%);
+  background-color: #110f27;
   font-family: monospace;
 }
 
@@ -27,50 +25,31 @@ body {
 
 .display {
   height: 170px;
-  width: 100%;
   line-height: 100px;
   padding: 0 5% 0 5%;
   color: #E18735;
-  font-size: 50px;
-  overflow-y: hidden;
-  overflow-x: scroll;
-  white-space: nowrap;
-  transition: all 0.3s;
 
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
 }
 
-.calculator.is-mobile .keyboard {
+.keyboard {
   width: 100%;
   margin-bottom: 50px;
   padding: 0;
 }
 
-.calculator.is-mobile .keyboard .keyboard-line {
+.keyboard-line {
   height: 80px;
   width: 100%;
-  border-top: 1px solid #7d7d7d47;
 
   display: flex;
   justify-content: center;
 }
 
-.keyboard-line:last-child {
-  border-bottom: 1px solid #7d7d7d47;
-}
-
-.keyboard-line .button:last-child {
-  border: none;
-}
-
-.keyboard .keyboard-line:last-child .number {
+.keyboard-line:last-child .number {
   flex: 2.01;
-}
-
-.button:active {
-  box-shadow: inset 0px 0px 80px 0px rgba(0,0,0,0.25);
 }
 
 .button {
@@ -80,11 +59,14 @@ body {
   flex: 1;
   background: #211f42c2;
   color: #6cacc5;
-  border-right: 1px solid #7d7d7d47;
 
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.button:active {
+  box-shadow: inset 0px 0px 80px 0px rgba(0,0,0,0.25);
 }
 
 .result, .operator {
@@ -93,14 +75,4 @@ body {
 
 .clear, .backspace, .toggle-sign {
   background-color: #2f2d484a
-}
-
-*::-webkit-scrollbar {
-  height: 5px;
-  background-color: #181429;
-}
-
-*::-webkit-scrollbar-thumb {
-  height: 5px;
-  background-color: #6cacc5;
 }
